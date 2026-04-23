@@ -117,8 +117,7 @@ const TEAM = [
     qual: "LLB (Hons) · Advocate of the High Court of Kenya",
     bio: "Collins is the founding Managing Partner of the firm. He brings extensive experience in succession law and estate administration, complex property matters, and high-value commercial litigation. His practice includes emerging fields such as information technology law and digital regulation.",
     tags: ["Succession", "Litigation", "IT Law", "Property", "Corporate"],
-    // To add a photo: set photo to the relative path e.g. "/photos/collins.jpg"
-    photo: null,
+    photo: "/photos/collins.png",
   },
   {
     initials: "WO",
@@ -127,7 +126,7 @@ const TEAM = [
     qual: "LLB (Hons) · Advocate of the High Court of Kenya",
     bio: "Wesley is a Partner in the firm's Property Law and Corporate departments. He advises domestic and international clients on all aspects of real estate transactions, land law, and corporate structuring including company incorporation and tax registration.",
     tags: ["Property Law", "Conveyancing", "Company Law", "Incorporation"],
-    photo: null,
+    photo: "/photos/wesley.png",
   },
   {
     initials: "JN",
@@ -148,7 +147,7 @@ const SUPPORT_TEAM = [
     qual: "LLB (Hons)",
     bio: "Caroline oversees the day-to-day operations of the firm. Her legal background equips her to manage client onboarding, file management, scheduling, and administrative processes with precision.",
     tags: ["Firm Operations", "Client Relations", "Administration"],
-    photo: null,
+    photo: "/photos/caroline.png",
   },
   {
     initials: "PMK",
@@ -157,7 +156,7 @@ const SUPPORT_TEAM = [
     qual: "LLB (Hons) · Postgraduate Studies, Kenya School of Law",
     bio: "Peter supports the firm's attorneys with in-depth legal research, case law analysis, statutory interpretation, and preparation of legal opinions and briefs across all practice areas.",
     tags: ["Legal Research", "Case Analysis", "Legal Writing"],
-    photo: null,
+    photo: "/photos/peter-kavoi.png",
   },
 ];
 
@@ -345,7 +344,13 @@ function Hero() {
       onMouseMove={onMove}
       sx={{
         minHeight: "100vh",
-        background: `linear-gradient(150deg, ${NAVY_DEEP} 0%, ${NAVY} 50%, ${NAVY_MID} 100%)`,
+        backgroundImage: `
+          linear-gradient(150deg, rgba(6,15,28,0.82) 0%, rgba(11,27,46,0.75) 55%, rgba(18,35,56,0.88) 100%),
+          url('/photos/image.png')
+        `,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
         color: "white", position: "relative", overflow: "hidden",
         display: "flex", flexDirection: "column", justifyContent: "flex-end",
         pt: { xs: 16, md: 18 }, pb: { xs: 8, md: 14 },
@@ -753,11 +758,10 @@ function TeamCard({ m, compact }) {
 
       {/* ── PHOTO SLOT ────────────────────────────────────────────────────
           To add a real photo, set m.photo to the file path, e.g.:
-            photo: "/photos/collins.jpg"
-          The image will display object-fit:cover, cropped to the top.
+            photo: "/photos/collins.png"
           If m.photo is null the styled initials placeholder shows.          */}
       <Box sx={{
-        height: compact ? 180 : 240,
+        height: compact ? 260 : 320,
         position: "relative", overflow: "hidden",
         background: `linear-gradient(160deg, ${NAVY} 0%, ${NAVY_LIGHT} 100%)`,
         display: "flex", alignItems: "center", justifyContent: "center",
@@ -767,7 +771,14 @@ function TeamCard({ m, compact }) {
             component="img"
             src={m.photo}
             alt={m.name}
-            sx={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              objectPosition: "center 20%",
+              display: "block",
+              background: `linear-gradient(160deg, ${NAVY} 0%, ${NAVY_LIGHT} 100%)`,
+            }}
           />
         ) : (
           /* Styled placeholder — replace with <img> src once photos are ready */
