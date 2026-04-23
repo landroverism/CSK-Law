@@ -117,6 +117,7 @@ const TEAM = [
     qual: "LLB (Hons) · Advocate of the High Court of Kenya",
     bio: "Collins is the founding Managing Partner of the firm. He brings extensive experience in succession law and estate administration, complex property matters, and high-value commercial litigation. His practice includes emerging fields such as information technology law and digital regulation.",
     tags: ["Succession", "Litigation", "IT Law", "Property", "Corporate"],
+    email: "collins@kipkemoisangadvocates.com",
     photo: "/photos/collins.png",
   },
   {
@@ -126,6 +127,7 @@ const TEAM = [
     qual: "LLB (Hons) · Advocate of the High Court of Kenya",
     bio: "Wesley Omondi Okoth is an Advocate of the High Court of Kenya whose practice focuses on corporate and commercial law, TMT and technology, intellectual property, regulatory compliance, and cross-border advisory across East Africa. He advises businesses on commercial contracts, governance, restructurings, market entry, product and operational legal risk, data protection, employment, and sector-facing regulatory issues.\n\nHis work includes drafting and negotiating supply, distribution, franchise, licensing, SaaS, outsourcing, employment, consultancy, and data-processing agreements; supporting M&A, JV, and secured lending matters; and coordinating filings and approvals involving CAK, COMESA, ODPC, CBK, and KRA. Through Trademarkia, he leads East Africa-facing intellectual property advisory, helping businesses navigate brand protection, filing strategy, and market entry across Kenya, Uganda, Tanzania, Rwanda, Ethiopia, and ARIPO.\n\nSelected client and matter experience includes advice involving M-Pesa, Starlink, Amazon, Netflix, MTN, SIEMENS, Deel, Bolt, the World Bank, a leading Pan-African bank on a USD 57 million shared-services-centre assessment, a Dubai-based logistics company on a KES 32 million automotive acquisition, and a regional oil marketing company on a USD 52 million fuel transaction.",
     tags: ["Corporate & Commercial", "TMT / Tech", "IP", "Compliance", "Employment", "ESG"],
+    email: "wesomondi@kipkemoisangadvocates.com",
     photo: "/photos/wesley.png",
   },
   {
@@ -135,6 +137,7 @@ const TEAM = [
     qual: "LLB (Hons) · Advocate of the High Court of Kenya",
     bio: "Joseph is an Associate Advocate supporting the firm's litigation, property, and corporate teams. He brings sharp analytical skills and meticulous attention to detail to every matter — from thorough legal research to front-line court proceedings.",
     tags: ["Litigation", "Conveyancing", "Debt Recovery", "Research"],
+    email: "nzanga@kipkemoisangadvocates.com",
     photo: null,
   },
 ];
@@ -819,6 +822,25 @@ function TeamCard({ m, compact }) {
 
         <Box sx={{ width: 28, height: 2, bgcolor: GOLD, mb: 2 }} />
 
+        {m.email && (
+          <Box
+            component="a"
+            href={`mailto:${m.email}`}
+            sx={{
+              display: "inline-flex", alignItems: "center", gap: 1,
+              mb: 2, textDecoration: "none",
+              color: GOLD_DEEP, fontSize: "0.78rem", fontWeight: 500,
+              transition: "all 0.25s ease",
+              "&:hover": { color: GOLD, "& .email-icon": { transform: "scale(1.15)" } },
+            }}
+          >
+            <Box className="email-icon" sx={{ display: "flex", transition: "transform 0.25s ease" }}>
+              <FaEnvelope size={12} />
+            </Box>
+            {m.email}
+          </Box>
+        )}
+
         <Stack spacing={1.4} sx={{ mb: 2.5 }}>
           {m.bio.split("\n\n").map((para, i) => (
             <Typography key={i} sx={{ fontSize: "0.85rem", color: "rgba(11,27,46,0.72)", lineHeight: 1.8, fontWeight: 300 }}>
@@ -1016,7 +1038,7 @@ function Contact() {
   const contactDetails = [
     { icon: <FaMapMarkerAlt />, label: "Address",   value: "Kirima House, Moktar Daddah Street, Nairobi, Kenya" },
     { icon: <FaPhoneAlt />,     label: "Telephone", value: "+254 718 076 309",          href: "tel:+254718076309" },
-    { icon: <FaEnvelope />,     label: "Email",     value: "collinskipkemoilaw@outlook.com", href: "mailto:collinskipkemoilaw@outlook.com" },
+    { icon: <FaEnvelope />,     label: "Email",     value: "collins@kipkemoisangadvocates.com", href: "mailto:collins@kipkemoisangadvocates.com" },
     { icon: <MdVerified />,     label: "LSK Reg.",  value: "P105/25457/25" },
     { icon: <FaRegClock />,     label: "Hours",     value: "Mon–Fri 8:00 am – 5:30 pm · Sat by appointment" },
   ];
@@ -1220,7 +1242,7 @@ function Footer() {
               </Stack>
               <Stack direction="row" spacing={1.2} alignItems="center">
                 <FaEnvelope style={{ color: GOLD, fontSize: 12 }} />
-                <Typography sx={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.55)", fontWeight: 300 }}>collinskipkemoilaw@outlook.com</Typography>
+                <Typography sx={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.55)", fontWeight: 300 }}>collins@kipkemoisangadvocates.com</Typography>
               </Stack>
             </Stack>
           </Grid>
