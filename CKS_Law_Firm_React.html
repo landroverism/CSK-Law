@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Collins Kipkemoi Sang & Company Advocates | Nairobi, Kenya</title>
+
+<!-- Google Fonts: Cormorant Garamond (display serif) + Jost (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Flaticon UIcons: Regular Rounded + Bold Rounded + Solid Rounded -->
+<link
+  rel="stylesheet"
+  href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+/>
+
+<style>
+  :root {
+    --navy: #0B1B2E;
+    --navy-mid: #122338;
+    --navy-light: #1A3050;
+    --navy-deep: #060F1C;
+    --gold: #C8A96E;
+    --gold-light: #DFC08A;
+    --gold-pale: #F0DEAD;
+    --gold-deep: #A78848;
+    --white: #FFFFFF;
+    --ivory: #FAFAF7;
+    --bone: #F5F2EC;
+    --text-dark: #0B1B2E;
+    --text-muted-dark: rgba(11, 27, 46, 0.64);
+    --text-muted-light: rgba(245, 242, 236, 0.64);
+    --border-gold: rgba(200, 169, 110, 0.28);
+    --border-navy: rgba(11, 27, 46, 0.1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', -apple-system, sans-serif;
+    background: var(--ivory);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Global Flaticon icon baseline */
+  .fi { display: inline-flex; line-height: 1; }
+
+  /* Scroll progress bar */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 2000; width: 0%;
+    transition: width 0.08s linear;
+    box-shadow: 0 0 14px rgba(200,169,110,0.5);
+  }
+
+  /* Grain texture overlay */
+  .grain {
+    pointer-events: none; position: fixed; inset: 0;
+    z-index: 1500; opacity: 0.035; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Animated hero orbs */
+  @keyframes orb1 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.08); }
+  }
+  @keyframes orb2 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(-50px, 40px) scale(1.12); }
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0.3; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes drawLine {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(26px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* Button shine */
+  .btn-shine::after {
+    content: '';
+    position: absolute; top: 0; left: -80%; width: 60%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.45), transparent);
+    transform: skewX(-22deg);
+    transition: left 0.7s;
+  }
+  .btn-shine:hover::after { left: 130%; }
+
+  /* Gold underline on section title em */
+  .underline-gold {
+    position: relative; display: inline-block;
+  }
+  .underline-gold::after {
+    content: '';
+    position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, transparent 100%);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+  }
+  .visible .underline-gold::after { transform: scaleX(1); }
+
+  /* Practice card inner shine line */
+  .gold-top {
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Dotted bg for navy sections */
+  .dot-pattern {
+    background-image: radial-gradient(rgba(200,169,110,0.09) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Mobile nav menu slide */
+  .mobile-menu {
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .mobile-menu.open { transform: translateX(0); }
+
+  /* Selection */
+  ::selection { background: var(--gold); color: var(--navy); }
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="grain"></div>
+<div id="root"></div>
+
+<!-- React + ReactDOM UMD -->
+<script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+
+<!-- Emotion (required peer deps for MUI) -->
+<script crossorigin src="https://unpkg.com/@emotion/react@11.11.1/dist/emotion-react.umd.min.js"></script>
+<script crossorigin src="https://unpkg.com/@emotion/styled@11.11.0/dist/emotion-styled.umd.min.js"></script>
+
+<!-- MUI Material UMD -->
+<script crossorigin src="https://unpkg.com/@mui/material@5.15.15/umd/material-ui.production.min.js"></script>
+
+<!-- Babel Standalone for JSX transform -->
+<script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+const {
+  ThemeProvider, createTheme, CssBaseline, useMediaQuery,
+  AppBar, Toolbar, Container, Box, Grid, Stack,
+  Typography, Button, IconButton, Drawer,
+  Card, CardContent, Paper, Divider,
+  TextField, MenuItem, InputLabel, FormControl, Select, InputBase,
+  Fade, Grow, Slide, Zoom, Collapse,
+  Chip, Avatar, Link,
+} = MaterialUI;
+
+// ── THEME ────────────────────────────────────────────────────────────────
+const NAVY = '#0B1B2E';
+const NAVY_MID = '#122338';
+const NAVY_LIGHT = '#1A3050';
+const NAVY_DEEP = '#060F1C';
+const GOLD = '#C8A96E';
+const GOLD_LIGHT = '#DFC08A';
+const GOLD_PALE = '#F0DEAD';
+const GOLD_DEEP = '#A78848';
+const WHITE = '#FFFFFF';
+const IVORY = '#FAFAF7';
+const BONE = '#F5F2EC';
+
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary:   { main: NAVY, dark: NAVY_DEEP, light: NAVY_LIGHT, contrastText: WHITE },
+    secondary: { main: GOLD, dark: GOLD_DEEP, light: GOLD_LIGHT, contrastText: NAVY },
+    background: { default: IVORY, paper: WHITE },
+    text: { primary: NAVY, secondary: 'rgba(11,27,46,0.64)' },
+    divider: 'rgba(11,27,46,0.1)',
+  },
+  typography: {
+    fontFamily: "'Jost', sans-serif",
+    h1: { fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, letterSpacing: '-0.01em' },
+    h2: { fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, letterSpacing: '-0.005em' },
+    h3: { fontFamily: "'Cormorant Garamond', serif", fontWeight: 400 },
+    h4: { fontFamily: "'Cormorant Garamond', serif", fontWeight: 400 },
+    h5: { fontFamily: "'Cormorant Garamond', serif", fontWeight: 400 },
+    h6: { fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, letterSpacing: '0.02em' },
+    button: { textTransform: 'uppercase', letterSpacing: '0.18em', fontWeight: 500 },
+    body1: { fontWeight: 300, lineHeight: 1.8, fontSize: '1rem' },
+    body2: { fontWeight: 300, lineHeight: 1.75 },
+  },
+  shape: { borderRadius: 0 },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+          padding: '0.85rem 2.2rem',
+          fontSize: '0.75rem',
+          transition: 'all 0.35s cubic-bezier(0.22, 1, 0.36, 1)',
+          position: 'relative',
+          overflow: 'hidden',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-root': {
+            borderRadius: 0,
+            background: 'rgba(11,27,46,0.025)',
+            transition: 'all 0.3s',
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'rgba(11,27,46,0.15)',
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: GOLD,
+          },
+          '& .MuiInputLabel-root': {
+            fontSize: '0.72rem',
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            color: 'rgba(11,27,46,0.6)',
+          },
+        },
+      },
+    },
+  },
+});
+
+// ── ENHANCED INTERSECTION OBSERVER HOOK ──────────────────────────────────
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+// Animated count-up for stats
+function useCountUp(target, duration = 1800, start = false) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    let frame; const t0 = performance.now();
+    const tick = (t) => {
+      const p = Math.min((t - t0) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setValue(Math.floor(eased * target));
+      if (p < 1) frame = requestAnimationFrame(tick);
+      else setValue(target);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [target, duration, start]);
+  return value;
+}
+
+// ── DATA ─────────────────────────────────────────────────────────────────
+const PRACTICE_AREAS = [
+  {
+    icon: 'fi-rr-document-signed',
+    title: 'Succession & Estate Planning',
+    desc: 'Expert administration of estates, probate proceedings, grant applications, and comprehensive succession planning for families and institutions.',
+    sub: [
+      'Grant of Probate & Letters of Administration',
+      'Confirmation of Grant & Distribution',
+      'Estate litigation & dispute resolution',
+      'Wills drafting & estate planning',
+    ],
+  },
+  {
+    icon: 'fi-rr-home-location',
+    title: 'Property Law & Conveyancing',
+    desc: 'Full-service property legal advisory covering acquisitions, disposals, land regularisation, leases, and real estate transactions across Kenya.',
+    sub: [
+      'Sale & purchase agreements',
+      'Land regularisation & sub-division',
+      'Commercial & residential leases',
+      'Landlord-tenant dispute resolution',
+      'Telecommunications site agreements',
+    ],
+  },
+  {
+    icon: 'fi-rr-briefcase',
+    title: 'Company & Corporate Law',
+    desc: 'Comprehensive corporate services from incorporation through ongoing governance, transactions, and regulatory compliance for businesses of all sizes.',
+    sub: [
+      'Company incorporation & registration',
+      'Tax registration (KRA PIN, VAT, PAYE)',
+      'Business permits & licences',
+      'Corporate governance & compliance',
+      'Shareholder agreements & restructuring',
+    ],
+  },
+  {
+    icon: 'fi-rr-calculator',
+    title: 'Tax Advisory & Appeals',
+    desc: 'Expert representation before the Tax Appeals Tribunal, tax dispute resolution, and advisory services to ensure clients\u2019 full compliance with Kenyan tax law.',
+    sub: [
+      'Tax appeal proceedings (TATC)',
+      'KRA dispute resolution',
+      'Tax structuring advisory',
+      'Compliance reviews',
+    ],
+  },
+  {
+    icon: 'fi-rr-shield-check',
+    title: 'Information Technology Law',
+    desc: 'Specialist advisory in data protection, digital contracts, technology transactions and cybersecurity law \u2014 an increasingly critical practice for modern businesses.',
+    sub: [
+      'Data Protection Act compliance',
+      'Technology contracts & SaaS agreements',
+      'Digital intellectual property',
+      'Cybersecurity advisory',
+    ],
+  },
+  {
+    icon: 'fi-rr-balance-scale-right',
+    title: 'Litigation & Dispute Resolution',
+    desc: 'Vigorous representation across all levels of the Kenyan courts \u2014 from the subordinate courts to the High Court and Court of Appeal \u2014 in civil, commercial and family matters.',
+    sub: [
+      'Civil & commercial litigation',
+      'Debt recovery proceedings',
+      'Injunctive relief applications',
+      'Small Claims Court matters',
+      'Children\u2019s Court proceedings',
+    ],
+  },
+  {
+    icon: 'fi-rr-key',
+    title: 'Property Management',
+    desc: 'End-to-end legal and administrative management of residential and commercial properties \u2014 protecting landlords\u2019 investments while ensuring full regulatory compliance.',
+    sub: [
+      'Lease drafting & review',
+      'Tenant vetting & onboarding',
+      'Rent collection & arrears management',
+      'Property compliance advisory',
+      'Vacant possession & eviction proceedings',
+      'Caretaker & agent oversight',
+    ],
+  },
+  {
+    icon: 'fi-rr-comments-question',
+    title: 'Landlord, Tenant & Rental Disputes',
+    desc: 'Specialist representation in rental and tenancy disputes before the Business Premises Rent Tribunal, magistrates\u2019 courts, and the Environment & Land Court.',
+    sub: [
+      'BPRT applications & filings',
+      'Unlawful eviction & notice challenges',
+      'Rent increase disputes',
+      'Unauthorised subletting matters',
+      'Recovery of unpaid rent & damages',
+      'Tenancy termination proceedings',
+    ],
+  },
+];
+
+const TEAM = [
+  {
+    initials: 'CKS', role: 'Managing Partner & Founder', name: 'Collins Kipkemoi Sang',
+    qual: 'LLB (Hons) · Advocate of the High Court of Kenya',
+    bio: 'Collins is the founding Managing Partner of the firm. He brings extensive experience in succession law and estate administration, complex property matters, and high-value commercial litigation. His practice is underpinned by a deep commitment to client service and a forward-thinking approach to the evolving legal landscape \u2014 including emerging fields such as information technology law and digital regulation.',
+    tags: ['Succession', 'Litigation', 'IT Law', 'Property', 'Corporate'],
+  },
+  {
+    initials: 'WO', role: 'Partner', name: 'Wesley Omondi',
+    qual: 'LLB (Hons) · Advocate of the High Court of Kenya',
+    bio: 'Wesley is a Partner in the firm\u2019s Property Law and Corporate departments. He advises domestic and international clients on all aspects of real estate transactions, land law, and corporate structuring. His corporate practice encompasses the full lifecycle of business formation \u2014 from company incorporation and tax registration through ongoing regulatory compliance and governance advisory.',
+    tags: ['Property Law', 'Conveyancing', 'Company Law', 'Incorporation', 'Tax Registration'],
+  },
+  {
+    initials: 'JN', role: 'Associate Advocate', name: 'Joseph Nzanga',
+    qual: 'LLB (Hons) · Advocate of the High Court of Kenya',
+    bio: 'Joseph is an Associate Advocate who supports the firm\u2019s litigation, property and corporate teams. He brings sharp analytical skills and meticulous attention to detail to every matter he handles. Joseph assists clients across a range of practice areas, providing thorough legal research, drafting, and front-line client support in court proceedings and transactional work.',
+    tags: ['Litigation', 'Conveyancing', 'Debt Recovery', 'Research'],
+  },
+];
+const SUPPORT_TEAM = [
+  {
+    initials: 'CN', role: 'Firm Administrator', name: 'Caroline Nyokabi',
+    qual: 'LLB (Hons)',
+    bio: 'Caroline serves as the Firm Administrator, overseeing the day-to-day operations of Collins Kipkemoi Sang & Company Advocates. Her legal background equips her with a thorough understanding of the firm\u2019s work and enables her to manage client onboarding, file management, scheduling, and administrative processes with precision. Caroline ensures that the firm operates smoothly, efficiently, and to the highest professional standards.',
+    tags: ['Firm Operations', 'Client Relations', 'File Management', 'Administration'],
+  },
+  {
+    initials: 'PMK', role: 'Legal Researcher', name: 'Peter Musyoka Kavoi',
+    qual: 'LLB (Hons) · Postgraduate Studies, Kenya School of Law',
+    bio: 'Peter is the firm\u2019s Legal Researcher, currently undertaking postgraduate studies at the Kenya School of Law. He supports the firm\u2019s attorneys with in-depth legal research, case law analysis, statutory interpretation, and the preparation of legal opinions and briefs. His academic rigour and methodical approach to research are invaluable assets across the firm\u2019s litigation, corporate, and property practice areas.',
+    tags: ['Legal Research', 'Case Analysis', 'Legal Writing', 'Statutory Review'],
+  },
+];
+
+const INSIGHTS = [
+  { cat: 'Property Law', title: 'Understanding Land Registration in Kenya: A Practical Guide for Buyers', excerpt: 'Navigating Kenya\u2019s land registration system can be complex. This article breaks down the key steps, documents required, and common pitfalls to avoid when purchasing property.' },
+  { cat: 'Company Law', title: 'How to Incorporate a Company in Kenya: Step-by-Step for Local and Foreign Investors', excerpt: 'A comprehensive overview of the company registration process under the Companies Act 2015, covering the requirements for both resident and non-resident directors.' },
+  { cat: 'Succession Law', title: 'What Happens to an Estate When There Is No Will in Kenya?', excerpt: 'Intestate succession in Kenya follows specific statutory rules. We explain how the Law of Succession Act governs distribution and what beneficiaries need to know.' },
+];
+
+const WHY_ITEMS = [
+  { title: 'Deep Kenyan Market Knowledge', desc: 'Decades of combined experience navigating Kenya\u2019s legal system, from the Land Registry to the Court of Appeal, means your matter is handled by counsel who know the terrain.' },
+  { title: 'International Standards, Local Insight', desc: 'Our attorneys combine international academic qualifications with intimate knowledge of Kenyan law and practice \u2014 an essential combination for cross-border work.' },
+  { title: 'Transparent Communication', desc: 'We believe clients deserve clear, honest updates at every stage. No jargon, no surprises \u2014 just straightforward guidance on your matter\u2019s progress and prospects.' },
+  { title: 'Full-Service Capability', desc: 'From registering your company on day one to resolving a complex estate dispute decades later, our full-service model means we are your firm for life.' },
+];
+
+const FEATURES = [
+  { n: '01', title: 'International Perspective', desc: 'We serve a number of clients internationally, advising on Kenyan law in the context of cross-border transactions, foreign investment, and multi-jurisdictional matters with confidence and expertise.' },
+  { n: '02', title: 'Multidisciplinary Team', desc: 'From property conveyancing to company incorporation, tax registration to high-stakes litigation, our team covers a comprehensive spectrum of legal disciplines.' },
+  { n: '03', title: 'Client-Centred Approach', desc: 'We build lasting relationships grounded in transparency, rigorous communication, and an unwavering commitment to achieving our clients\u2019 objectives.' },
+  { n: '04', title: 'Technology-Forward Practice', desc: 'We integrate modern legal technology and document management systems to deliver efficient, timely, and well-organised client service.' },
+];
+
+const NAV_LINKS = [
+  { label: 'About', href: '#about' },
+  { label: 'Practice', href: '#practice' },
+  { label: 'Our Team', href: '#team' },
+  { label: 'Insights', href: '#insights' },
+  { label: 'Contact', href: '#contact' },
+];
+
+// ── NAVIGATION ───────────────────────────────────────────────────────────
+function Navigation() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const isMobile = useMediaQuery('(max-width:960px)');
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <>
+      <AppBar
+        position="fixed" elevation={0}
+        sx={{
+          background: scrolled ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.72)',
+          backdropFilter: 'blur(18px)',
+          WebkitBackdropFilter: 'blur(18px)',
+          borderBottom: scrolled ? `1px solid ${'rgba(11,27,46,0.08)'}` : '1px solid transparent',
+          transition: 'all 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+          boxShadow: scrolled ? '0 8px 30px -18px rgba(11,27,46,0.16)' : 'none',
+        }}
+      >
+        <Toolbar
+          sx={{
+            py: scrolled ? 1.2 : 2, px: { xs: '5vw', md: '5vw' },
+            transition: 'padding 0.35s ease',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            minHeight: 'auto !important',
+          }}
+        >
+          {/* Logo */}
+          <Box
+            component="a" href="#"
+            sx={{
+              textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1.2,
+              '&:hover .logo-mark': {
+                transform: 'rotate(-90deg)', background: GOLD, color: WHITE,
+              },
+            }}
+          >
+            <Box
+              className="logo-mark"
+              sx={{
+                width: 34, height: 34, border: `1.2px solid ${GOLD}`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 16, fontWeight: 500, color: GOLD_DEEP,
+                transition: 'all 0.55s cubic-bezier(0.76, 0, 0.24, 1)',
+              }}
+            >C</Box>
+            <Box>
+              <Typography
+                sx={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: '1.08rem', fontWeight: 500,
+                  letterSpacing: '0.02em', color: NAVY, lineHeight: 1.1,
+                }}
+              >
+                Collins Kipkemoi Sang
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '0.56rem', fontWeight: 300,
+                  letterSpacing: '0.24em', textTransform: 'uppercase',
+                  color: 'rgba(11,27,46,0.5)', mt: '2px',
+                }}
+              >
+                & Company Advocates
+              </Typography>
+            </Box>
+          </Box>
+
+          {!isMobile && (
+            <Stack direction="row" spacing={4.5} alignItems="center">
+              {NAV_LINKS.map((l) => (
+                <Box
+                  key={l.href} component="a" href={l.href}
+                  sx={{
+                    textDecoration: 'none',
+                    fontSize: '0.72rem', fontWeight: 400,
+                    letterSpacing: '0.2em', textTransform: 'uppercase',
+                    color: 'rgba(11,27,46,0.72)', position: 'relative',
+                    transition: 'color 0.3s',
+                    '&::after': {
+                      content: '""', position: 'absolute',
+                      left: 0, bottom: -6, height: 1.5, width: '100%',
+                      background: GOLD,
+                      transform: 'scaleX(0)', transformOrigin: 'right',
+                      transition: 'transform 0.45s cubic-bezier(0.76, 0, 0.24, 1)',
+                    },
+                    '&:hover': { color: NAVY },
+                    '&:hover::after': { transform: 'scaleX(1)', transformOrigin: 'left' },
+                  }}
+                >
+                  {l.label}
+                </Box>
+              ))}
+              <Button
+                className="btn-shine"
+                href="#contact"
+                variant="outlined"
+                sx={{
+                  borderColor: GOLD, color: GOLD_DEEP,
+                  borderWidth: 1, fontSize: '0.68rem',
+                  py: 0.9, px: 2.4,
+                  '&:hover': {
+                    borderColor: GOLD, background: GOLD, color: NAVY,
+                    transform: 'translateY(-1px)',
+                    boxShadow: '0 10px 26px -12px rgba(200,169,110,0.7)',
+                  },
+                }}
+              >
+                Consult Us
+              </Button>
+            </Stack>
+          )}
+
+          {isMobile && (
+            <IconButton onClick={() => setOpen(true)} sx={{ color: NAVY }}>
+              <i className="fi fi-rr-menu-burger" style={{ fontSize: 22 }}></i>
+            </IconButton>
+          )}
+        </Toolbar>
+      </AppBar>
+
+      {/* Mobile drawer */}
+      <Drawer
+        anchor="right" open={open} onClose={() => setOpen(false)}
+        PaperProps={{
+          sx: {
+            background: NAVY, color: WHITE, width: '78vw', maxWidth: 360,
+            p: 3, border: 'none',
+            backgroundImage: 'radial-gradient(circle at 30% 20%, rgba(200,169,110,0.08), transparent 60%)',
+          },
+        }}
+      >
+        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={4}>
+          <Typography sx={{ fontFamily: "'Cormorant Garamond', serif", color: GOLD_LIGHT, fontSize: 18 }}>
+            Menu
+          </Typography>
+          <IconButton onClick={() => setOpen(false)} sx={{ color: WHITE }}>
+            <i className="fi fi-rr-cross-small" style={{ fontSize: 22 }}></i>
+          </IconButton>
+        </Stack>
+        <Stack spacing={3}>
+          {NAV_LINKS.map((l, i) => (
+            <Box
+              key={l.href} component="a" href={l.href}
+              onClick={() => setOpen(false)}
+              sx={{
+                textDecoration: 'none', color: WHITE,
+                fontSize: '1.5rem', fontFamily: "'Cormorant Garamond', serif",
+                fontWeight: 400, borderBottom: `1px solid rgba(200,169,110,0.15)`,
+                pb: 1.5, display: 'flex', alignItems: 'center', gap: 2,
+                animation: open ? `fadeUp 0.5s ${0.08 * i}s both` : 'none',
+                '&:hover': { color: GOLD_LIGHT, paddingLeft: '6px' },
+                transition: 'all 0.35s',
+              }}
+            >
+              <Box sx={{ fontSize: '0.6rem', color: GOLD, letterSpacing: '0.2em' }}>
+                0{i + 1}
+              </Box>
+              {l.label}
+            </Box>
+          ))}
+          <Button
+            href="#contact" onClick={() => setOpen(false)}
+            sx={{
+              mt: 2, background: GOLD, color: NAVY,
+              '&:hover': { background: GOLD_LIGHT },
+              py: 1.5, fontWeight: 600,
+            }}
+          >
+            Consult Us →
+          </Button>
+        </Stack>
+      </Drawer>
+    </>
+  );
+}
+
+// ── HERO ─────────────────────────────────────────────────────────────────
+function Hero() {
+  const [mx, setMx] = useState(50);
+  const [my, setMy] = useState(50);
+
+  const onMouseMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    setMx(((e.clientX - r.left) / r.width) * 100);
+    setMy(((e.clientY - r.top) / r.height) * 100);
+  };
+
+  return (
+    <Box
+      id="home"
+      onMouseMove={onMouseMove}
+      sx={{
+        minHeight: '100vh',
+        position: 'relative', overflow: 'hidden',
+        display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+        pb: { xs: 8, md: 14 }, pt: { xs: 16, md: 18 }, px: { xs: '5vw', md: '5vw' },
+        background: `linear-gradient(160deg, ${NAVY_DEEP} 0%, ${NAVY} 50%, ${NAVY_MID} 100%)`,
+        color: WHITE,
+      }}
+    >
+      {/* Animated orbs */}
+      <Box
+        sx={{
+          position: 'absolute', top: '10%', right: '8%',
+          width: 520, height: 520,
+          background: `radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%)`,
+          animation: 'orb1 14s ease-in-out infinite', filter: 'blur(30px)',
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute', bottom: '5%', left: '-5%',
+          width: 620, height: 620,
+          background: `radial-gradient(circle, rgba(26,48,80,0.9) 0%, transparent 65%)`,
+          animation: 'orb2 18s ease-in-out infinite', filter: 'blur(40px)',
+        }}
+      />
+      {/* Cursor reactive highlight */}
+      <Box
+        sx={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: `radial-gradient(600px circle at ${mx}% ${my}%, rgba(200,169,110,0.06), transparent 40%)`,
+          transition: 'background 0.25s linear',
+        }}
+      />
+      {/* Diagonal hairlines */}
+      <Box
+        sx={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          '&::before, &::after': {
+            content: '""', position: 'absolute', width: 1, height: '140%',
+            background: `linear-gradient(to bottom, transparent, ${GOLD}, transparent)`,
+            transform: 'rotate(8deg)', top: '-20%',
+          },
+          '&::before': { right: '5%', opacity: 0.25 },
+          '&::after':  { right: '15%', opacity: 0.12 },
+        }}
+      />
+      {/* Grid hairlines (dot pattern) */}
+      <Box
+        className="dot-pattern"
+        sx={{ position: 'absolute', inset: 0, opacity: 0.6 }}
+      />
+
+      {/* Scroll indicator */}
+      <Box
+        sx={{
+          display: { xs: 'none', md: 'flex' },
+          position: 'absolute', left: '5vw', bottom: '6rem',
+          flexDirection: 'column', alignItems: 'center', gap: 1,
+          opacity: 0, animation: 'fadeIn 1.2s 1s forwards',
+        }}
+      >
+        <Typography sx={{ fontSize: '0.6rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>
+          Scroll
+        </Typography>
+        <Box sx={{ width: 1, height: '3rem', background: `linear-gradient(to bottom, ${GOLD}, transparent)`, animation: 'scrollLine 2s ease-in-out infinite' }} />
+      </Box>
+
+      {/* Motto vertical */}
+      <Box
+        sx={{
+          display: { xs: 'none', md: 'block' },
+          position: 'absolute', right: '5vw', bottom: '6rem',
+          writingMode: 'vertical-rl', textOrientation: 'mixed',
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: '0.8rem', fontStyle: 'italic',
+          letterSpacing: '0.1em', color: 'rgba(255,255,255,0.35)',
+          opacity: 0, animation: 'fadeIn 1.4s 1.2s forwards',
+        }}
+      >
+        “Let justice roll on like a river, righteousness like a never-failing stream” — Amos 5:24
+      </Box>
+
+      <Box sx={{ position: 'relative', zIndex: 2, maxWidth: 980 }}>
+        <Box
+          sx={{
+            display: 'inline-flex', alignItems: 'center', gap: 1.2,
+            mb: 4, opacity: 0, animation: 'fadeUp 0.9s 0.2s forwards',
+          }}
+        >
+          <Box sx={{ width: 36, height: 1, background: GOLD }} />
+          <Typography sx={{ fontSize: '0.7rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: GOLD_LIGHT, fontWeight: 400 }}>
+            Nairobi, Kenya · Est. 2025
+          </Typography>
+        </Box>
+
+        <Typography
+          component="h1"
+          sx={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 'clamp(3rem, 8vw, 7rem)',
+            fontWeight: 300, lineHeight: 1.02, letterSpacing: '-0.02em',
+            mb: 3, maxWidth: 900, color: WHITE,
+            opacity: 0, animation: 'fadeUp 1s 0.4s forwards',
+          }}
+        >
+          Justice.<br />
+          <Box component="span" sx={{
+            fontStyle: 'italic',
+            background: `linear-gradient(110deg, ${GOLD_LIGHT} 0%, ${GOLD_PALE} 40%, ${GOLD_LIGHT} 60%, ${GOLD} 100%)`,
+            backgroundSize: '200% 100%',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text', color: 'transparent',
+            animation: 'shimmer 6s linear infinite',
+          }}>Integrity.</Box><br />
+          Excellence.
+        </Typography>
+
+        <Typography
+          sx={{
+            fontSize: '1.05rem', color: 'rgba(255,255,255,0.68)',
+            maxWidth: 560, lineHeight: 1.85, mb: 5, fontWeight: 300,
+            opacity: 0, animation: 'fadeUp 1s 0.6s forwards',
+          }}
+        >
+          A full-service law firm delivering sophisticated legal counsel to individuals,
+          corporations and institutions across Kenya and the East African region.
+        </Typography>
+
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 4 }} alignItems={{ xs: 'flex-start', sm: 'center' }}
+          sx={{ opacity: 0, animation: 'fadeUp 1s 0.8s forwards' }}
+        >
+          <Button
+            className="btn-shine"
+            href="#practice"
+            sx={{
+              background: GOLD, color: NAVY, px: 4, py: 1.6, fontSize: '0.75rem',
+              fontWeight: 600, letterSpacing: '0.22em',
+              boxShadow: '0 14px 30px -16px rgba(200,169,110,0.8)',
+              '&:hover': {
+                background: GOLD_LIGHT, transform: 'translateY(-2px)',
+                boxShadow: '0 20px 40px -16px rgba(200,169,110,0.9)',
+              },
+            }}
+          >
+            Our Practice Areas
+          </Button>
+          <Box
+            component="a" href="#team"
+            sx={{
+              textDecoration: 'none', color: 'rgba(255,255,255,0.7)',
+              fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase',
+              fontWeight: 400, display: 'inline-flex', alignItems: 'center', gap: 1.2,
+              borderBottom: `1px solid transparent`, pb: '3px',
+              transition: 'all 0.35s',
+              '&:hover': {
+                color: WHITE, borderBottomColor: GOLD,
+                '& i': { transform: 'translateX(4px)', color: GOLD_LIGHT },
+              },
+              '& i': { transition: 'all 0.35s', color: GOLD },
+            }}
+          >
+            Meet Our Team <i className="fi fi-rr-arrow-right" style={{ fontSize: 14 }}></i>
+          </Box>
+        </Stack>
+      </Box>
+    </Box>
+  );
+}
+
+// ── STATS BAR ────────────────────────────────────────────────────────────
+function StatsBar() {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && setVisible(true)), { threshold: 0.3 });
+    io.observe(el); return () => io.disconnect();
+  }, []);
+
+  const three = useCountUp(3, 1400, visible);
+  const pct = useCountUp(100, 1800, visible);
+
+  const stats = [
+    { num: `${three}+`, label: 'Practice Areas' },
+    { num: 'EA',        label: 'Regional Reach' },
+    { num: 'LSK',       label: 'Registered Advocates' },
+    { num: `${pct}%`,   label: 'Client Commitment' },
+  ];
+
+  return (
+    <Box
+      ref={ref}
+      sx={{
+        background: WHITE,
+        borderTop: `1px solid ${'rgba(11,27,46,0.08)'}`,
+        borderBottom: `1px solid ${'rgba(11,27,46,0.08)'}`,
+        px: '5vw', py: { xs: 4, md: 5 },
+        position: 'relative',
+        '&::before': {
+          content: '""', position: 'absolute', top: 0, left: '15%', right: '15%',
+          height: 2,
+          background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
+        },
+      }}
+    >
+      <Grid container spacing={0}>
+        {stats.map((s, i) => (
+          <Grid item xs={6} md={3} key={s.label}>
+            <Box
+              sx={{
+                textAlign: 'center', px: 2, py: 1,
+                borderRight: { md: i < 3 ? '1px solid rgba(11,27,46,0.08)' : 'none' },
+                position: 'relative',
+                animation: visible ? `fadeUp 0.8s ${0.1 * i}s both` : 'none',
+                '&:hover .stat-num': { color: GOLD_DEEP, transform: 'translateY(-3px)' },
+              }}
+            >
+              <Box
+                className="stat-num"
+                sx={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: { xs: '2.4rem', md: '3rem' }, fontWeight: 300,
+                  color: GOLD, lineHeight: 1, mb: 0.8,
+                  transition: 'all 0.35s',
+                  display: 'inline-block',
+                }}
+              >
+                {s.num}
+              </Box>
+              <Typography sx={{ fontSize: '0.66rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(11,27,46,0.55)' }}>
+                {s.label}
+              </Typography>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+}
+
+// ── SECTION HELPERS ──────────────────────────────────────────────────────
+function SectionEyebrow({ children, dark }) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 2 }}>
+      <Box sx={{ width: 26, height: 1.5, background: GOLD }} />
+      <Typography sx={{
+        fontSize: '0.7rem', letterSpacing: '0.32em',
+        textTransform: 'uppercase', color: dark ? GOLD_LIGHT : GOLD_DEEP, fontWeight: 500,
+      }}>
+        {children}
+      </Typography>
+    </Box>
+  );
+}
+
+function SectionTitle({ children, dark, sx }) {
+  return (
+    <Typography
+      component="h2"
+      sx={{
+        fontFamily: "'Cormorant Garamond', serif",
+        fontSize: { xs: '2.2rem', md: '3.4rem' },
+        fontWeight: 300, lineHeight: 1.12, letterSpacing: '-0.005em',
+        color: dark ? WHITE : NAVY, mb: 2.5,
+        ...sx,
+      }}
+    >
+      {children}
+    </Typography>
+  );
+}
+
+// ── ABOUT ────────────────────────────────────────────────────────────────
+function About() {
+  return (
+    <Box id="about" sx={{ background: IVORY, py: { xs: 8, md: 14 }, px: '5vw', position: 'relative' }}>
+      <Grid container spacing={{ xs: 4, md: 10 }} alignItems="flex-start">
+        <Grid item xs={12} md={6} className="reveal">
+          <SectionEyebrow>Our Firm</SectionEyebrow>
+          <SectionTitle>
+            A Trusted Partner in{' '}
+            <Box component="em" className="underline-gold" sx={{ fontStyle: 'italic', color: GOLD_DEEP }}>
+              Legal Excellence
+            </Box>
+          </SectionTitle>
+          <Stack spacing={2.5} sx={{ color: 'rgba(11,27,46,0.72)', fontWeight: 300 }}>
+            <Typography>
+              Collins Kipkemoi Sang &amp; Company Advocates is a full-service law firm headquartered in
+              Nairobi, Kenya. Founded by Managing Partner Collins Kipkemoi Sang, the firm has
+              established itself as a premier destination for{' '}
+              <Box component="strong" sx={{ color: NAVY, fontWeight: 500 }}>
+                sophisticated legal services
+              </Box>{' '}
+              spanning commercial law, property, corporate advisory, and complex litigation.
+            </Typography>
+            <Typography>
+              We combine deep local expertise with an international outlook — our attorneys are
+              trained in leading institutions across Kenya and Europe, and our practice regularly
+              serves both domestic and international clients navigating Kenya&apos;s legal landscape.
+            </Typography>
+            <Typography>
+              Our philosophy is grounded in the belief that every client deserves{' '}
+              <Box component="strong" sx={{ color: NAVY, fontWeight: 500 }}>
+                rigorous, principled, and results-oriented representation
+              </Box>{' '}
+              — from individual succession matters to large-scale corporate transactions.
+            </Typography>
+          </Stack>
+
+          <Paper
+            elevation={0}
+            sx={{
+              mt: 4, p: { xs: 2.5, md: 3.5 },
+              borderLeft: `3px solid ${GOLD}`,
+              background: `linear-gradient(90deg, rgba(200,169,110,0.08), rgba(200,169,110,0.01))`,
+              position: 'relative', overflow: 'hidden',
+              '&::before': {
+                content: '"”"', position: 'absolute', top: -24, right: 12,
+                fontFamily: "'Cormorant Garamond', serif", fontSize: 120,
+                color: GOLD, opacity: 0.15, lineHeight: 1,
+              },
+            }}
+          >
+            <Typography sx={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: { xs: '1.2rem', md: '1.45rem' },
+              fontStyle: 'italic', fontWeight: 400,
+              color: NAVY, lineHeight: 1.55, mb: 1,
+            }}>
+              “Let justice roll on like a river, righteousness like a never-failing stream.”
+            </Typography>
+            <Typography sx={{ fontSize: '0.72rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD_DEEP, fontWeight: 500 }}>
+              — Amos 5:24 &nbsp;|&nbsp; Firm Motto
+            </Typography>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} md={6} className="reveal">
+          <Stack spacing={0}>
+            {FEATURES.map((f, i) => (
+              <Box
+                key={f.n}
+                sx={{
+                  display: 'flex', gap: 3, alignItems: 'flex-start',
+                  py: 3,
+                  borderBottom: i < FEATURES.length - 1 ? `1px solid ${'rgba(11,27,46,0.08)'}` : 'none',
+                  cursor: 'default',
+                  transition: 'all 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+                  '&:hover': { pl: 1, borderBottomColor: GOLD, '& .feature-num': { color: GOLD_DEEP }, '& .feature-title': { color: GOLD_DEEP } },
+                }}
+              >
+                <Box
+                  className="feature-num"
+                  sx={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontSize: '1.3rem', fontWeight: 400, color: GOLD, minWidth: '2.6rem',
+                    transition: 'color 0.4s',
+                  }}
+                >
+                  {f.n}
+                </Box>
+                <Box>
+                  <Typography
+                    className="feature-title"
+                    sx={{ fontSize: '1rem', fontWeight: 500, color: NAVY, mb: 0.6, transition: 'color 0.4s' }}
+                  >
+                    {f.title}
+                  </Typography>
+                  <Typography sx={{ fontSize: '0.88rem', fontWeight: 300, color: 'rgba(11,27,46,0.68)', lineHeight: 1.75 }}>
+                    {f.desc}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Stack>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+// ── PRACTICE AREAS ───────────────────────────────────────────────────────
+function PracticeAreas() {
+  const [hovered, setHovered] = useState(null);
+  return (
+    <Box id="practice" sx={{
+      background: NAVY,
+      color: WHITE,
+      py: { xs: 8, md: 14 }, px: '5vw',
+      position: 'relative', overflow: 'hidden',
+    }}>
+      {/* decorative gradient blobs */}
+      <Box sx={{
+        position: 'absolute', top: '10%', right: '-10%',
+        width: 600, height: 600, borderRadius: '50%',
+        background: `radial-gradient(circle, rgba(200,169,110,0.08), transparent 70%)`,
+        filter: 'blur(40px)', pointerEvents: 'none',
+      }} />
+      <Box className="dot-pattern" sx={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
+
+      <Box sx={{ position: 'relative', zIndex: 1 }}>
+        <Box className="reveal" sx={{ maxWidth: 650, mb: { xs: 5, md: 8 } }}>
+          <SectionEyebrow dark>What We Do</SectionEyebrow>
+          <SectionTitle dark>
+            Our{' '}
+            <Box component="em" className="underline-gold" sx={{ fontStyle: 'italic', color: GOLD_LIGHT }}>
+              Practice Areas
+            </Box>
+          </SectionTitle>
+          <Typography sx={{ color: 'rgba(255,255,255,0.68)', fontWeight: 300, fontSize: '1rem', lineHeight: 1.85 }}>
+            We provide comprehensive legal services across a range of disciplines, delivering expert
+            guidance at every stage of our clients&apos; legal needs.
+          </Typography>
+        </Box>
+
+        <Grid container spacing={0.3}>
+          {PRACTICE_AREAS.map((p, i) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={p.title}>
+              <Box
+                className="reveal"
+                onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
+                sx={{
+                  background: hovered === i ? NAVY_LIGHT : NAVY_MID,
+                  p: { xs: 3, md: 3.5 }, height: '100%',
+                  position: 'relative', overflow: 'hidden',
+                  border: `1px solid ${hovered === i ? 'rgba(200,169,110,0.3)' : 'rgba(255,255,255,0.04)'}`,
+                  transition: 'all 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
+                  cursor: 'default',
+                  transitionDelay: `${0.04 * i}s`,
+                  transform: hovered === i ? 'translateY(-4px)' : 'translateY(0)',
+                  boxShadow: hovered === i ? '0 18px 40px -20px rgba(0,0,0,0.5)' : 'none',
+                }}
+              >
+                <Box className="gold-top" sx={{ transform: hovered === i ? 'scaleX(1)' : 'scaleX(0)' }} />
+
+                {/* background number echo */}
+                <Box sx={{
+                  position: 'absolute', right: -10, top: -20,
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: '7rem', fontWeight: 400, color: 'rgba(200,169,110,0.06)',
+                  lineHeight: 1, pointerEvents: 'none',
+                }}>
+                  {String(i + 1).padStart(2, '0')}
+                </Box>
+
+                {/* Icon */}
+                <Box sx={{
+                  width: 56, height: 56, mb: 2.5,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  border: `1px solid ${GOLD}`,
+                  background: hovered === i ? GOLD : 'transparent',
+                  color: hovered === i ? NAVY : GOLD,
+                  transition: 'all 0.45s cubic-bezier(0.76, 0, 0.24, 1)',
+                  transform: hovered === i ? 'rotate(-6deg) scale(1.05)' : 'none',
+                }}>
+                  <i className={`fi ${p.icon}`} style={{ fontSize: 22, display: 'inline-flex' }}></i>
+                </Box>
+
+                <Typography sx={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: '1.4rem', fontWeight: 400, color: WHITE,
+                  mb: 1.2, lineHeight: 1.2,
+                }}>
+                  {p.title}
+                </Typography>
+                <Typography sx={{ fontSize: '0.85rem', fontWeight: 300, color: 'rgba(255,255,255,0.62)', lineHeight: 1.75, mb: 2 }}>
+                  {p.desc}
+                </Typography>
+                <Stack spacing={0.6}>
+                  {p.sub.map((s) => (
+                    <Typography key={s} sx={{
+                      fontSize: '0.76rem', fontWeight: 300,
+                      color: 'rgba(255,255,255,0.48)', pl: 2, position: 'relative',
+                      '&::before': {
+                        content: '""', position: 'absolute', left: 0, top: '0.65em',
+                        width: 10, height: 1, background: GOLD,
+                      },
+                    }}>
+                      {s}
+                    </Typography>
+                  ))}
+                </Stack>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Box>
+  );
+}
+
+// ── TEAM ─────────────────────────────────────────────────────────────────
+function TeamCard({ m, support }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <Box
+      className="reveal"
+      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+      sx={{
+        background: support ? BONE : WHITE,
+        border: `1px solid ${'rgba(11,27,46,0.06)'}`,
+        p: { xs: 3, md: 4 }, position: 'relative', overflow: 'hidden',
+        transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
+        height: '100%',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: '0 24px 50px -24px rgba(11,27,46,0.18)',
+          borderColor: GOLD,
+        },
+      }}
+    >
+      <Box className="gold-top" sx={{ transform: hover ? 'scaleX(1)' : 'scaleX(0)' }} />
+
+      <Stack direction="row" spacing={2.5} alignItems="center" mb={2.5}>
+        <Box sx={{
+          width: 72, height: 72,
+          border: `1.5px solid ${GOLD}`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: '1.5rem', fontWeight: 400,
+          color: hover ? WHITE : GOLD_DEEP,
+          background: hover ? GOLD : 'rgba(200,169,110,0.05)',
+          transition: 'all 0.5s cubic-bezier(0.76, 0, 0.24, 1)',
+          transform: hover ? 'rotate(-8deg)' : 'none',
+          flexShrink: 0,
+        }}>
+          {m.initials}
+        </Box>
+        <Box>
+          <Typography sx={{ fontSize: '0.65rem', letterSpacing: '0.26em', textTransform: 'uppercase', color: GOLD_DEEP, mb: 0.5 }}>
+            {m.role}
+          </Typography>
+          <Typography sx={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.45rem', fontWeight: 500, color: NAVY, lineHeight: 1.2, mb: 0.3 }}>
+            {m.name}
+          </Typography>
+          <Typography sx={{ fontSize: '0.72rem', fontWeight: 300, color: 'rgba(11,27,46,0.52)', letterSpacing: '0.02em' }}>
+            {m.qual}
+          </Typography>
+        </Box>
+      </Stack>
+
+      <Box sx={{ width: 32, height: 2, background: GOLD, mb: 2 }} />
+      <Typography sx={{ fontSize: '0.85rem', fontWeight: 300, color: 'rgba(11,27,46,0.72)', lineHeight: 1.75, mb: 2.5 }}>
+        {m.bio}
+      </Typography>
+      <Stack direction="row" flexWrap="wrap" gap={0.8}>
+        {m.tags.map((t) => (
+          <Chip key={t} label={t} size="small"
+            sx={{
+              borderRadius: 0, fontSize: '0.62rem', letterSpacing: '0.12em',
+              textTransform: 'uppercase', fontWeight: 500,
+              height: 24, background: 'transparent',
+              border: `1px solid ${'rgba(11,27,46,0.12)'}`, color: 'rgba(11,27,46,0.58)',
+              transition: 'all 0.3s',
+              '&:hover': { borderColor: GOLD, color: GOLD_DEEP, background: 'rgba(200,169,110,0.05)' },
+            }}
+          />
+        ))}
+      </Stack>
+    </Box>
+  );
+}
+
+function Team() {
+  return (
+    <Box id="team" sx={{ background: IVORY, py: { xs: 8, md: 14 }, px: '5vw' }}>
+      <Grid container spacing={4} alignItems="flex-end" sx={{ mb: { xs: 5, md: 8 } }} className="reveal">
+        <Grid item xs={12} md={6}>
+          <SectionEyebrow>Our People</SectionEyebrow>
+          <SectionTitle>
+            Meet the{' '}
+            <Box component="em" className="underline-gold" sx={{ fontStyle: 'italic', color: GOLD_DEEP }}>
+              Team
+            </Box>
+          </SectionTitle>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Typography sx={{ fontSize: '0.95rem', color: 'rgba(11,27,46,0.68)', fontWeight: 300, lineHeight: 1.85 }}>
+            A team of dedicated advocates committed to delivering outstanding legal outcomes with
+            professionalism and integrity.
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2}>
+        {TEAM.map((m) => (
+          <Grid item xs={12} md={4} key={m.name}>
+            <TeamCard m={m} />
+          </Grid>
+        ))}
+      </Grid>
+
+      <Typography className="reveal" sx={{
+        fontSize: '0.65rem', letterSpacing: '0.32em', textTransform: 'uppercase',
+        color: 'rgba(11,27,46,0.42)', mt: 5, mb: 2, display: 'flex', alignItems: 'center', gap: 1.2,
+      }}>
+        <Box sx={{ width: 20, height: 1, background: GOLD }} />
+        Firm Support &amp; Research
+      </Typography>
+
+      <Grid container spacing={2}>
+        {SUPPORT_TEAM.map((m) => (
+          <Grid item xs={12} md={6} key={m.name}>
+            <TeamCard m={m} support />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+}
+
+// ── INSIGHTS ─────────────────────────────────────────────────────────────
+function Insights() {
+  const [subscribed, setSubscribed] = useState(false);
+  const [email, setEmail] = useState('');
+
+  return (
+    <Box id="insights" sx={{
+      background: NAVY_MID, color: WHITE, py: { xs: 8, md: 14 }, px: '5vw',
+      position: 'relative', overflow: 'hidden',
+    }}>
+      <Box sx={{
+        position: 'absolute', bottom: '-10%', left: '-8%',
+        width: 500, height: 500, borderRadius: '50%',
+        background: `radial-gradient(circle, rgba(200,169,110,0.08), transparent 70%)`,
+        filter: 'blur(50px)',
+      }} />
+      <Box className="dot-pattern" sx={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
+
+      <Box sx={{ position: 'relative', zIndex: 1 }}>
+        <Box className="reveal" sx={{ maxWidth: 650, mb: { xs: 5, md: 8 } }}>
+          <SectionEyebrow dark>Legal Insights</SectionEyebrow>
+          <SectionTitle dark>
+            Firm{' '}
+            <Box component="em" className="underline-gold" sx={{ fontStyle: 'italic', color: GOLD_LIGHT }}>
+              Articles &amp; Updates
+            </Box>
+          </SectionTitle>
+          <Typography sx={{ color: 'rgba(255,255,255,0.68)', fontWeight: 300, lineHeight: 1.85 }}>
+            Practical legal commentary on Kenyan law — from property and succession to corporate
+            compliance and emerging regulatory developments. New articles published regularly.
+          </Typography>
+        </Box>
+
+        <Grid container spacing={0.3}>
+          {INSIGHTS.map((a, i) => (
+            <Grid item xs={12} md={4} key={a.title}>
+              <Box
+                className="reveal"
+                sx={{
+                  background: NAVY, p: 4, height: '100%',
+                  position: 'relative', overflow: 'hidden',
+                  border: `1px solid rgba(255,255,255,0.04)`,
+                  cursor: 'pointer',
+                  transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
+                  '&::before': {
+                    content: '""', position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+                    background: `linear-gradient(90deg, ${GOLD}, ${GOLD_LIGHT})`,
+                    transform: 'scaleX(0)', transformOrigin: 'left',
+                    transition: 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
+                  },
+                  '&:hover': {
+                    background: NAVY_LIGHT,
+                    transform: 'translateY(-4px)',
+                    borderColor: 'rgba(200,169,110,0.2)',
+                    '&::before': { transform: 'scaleX(1)' },
+                    '& .read-arrow': { transform: 'translateX(6px)', opacity: 1 },
+                  },
+                }}
+              >
+                <Typography sx={{ fontSize: '0.62rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: GOLD, mb: 2, fontWeight: 500 }}>
+                  {a.cat}
+                </Typography>
+                <Typography sx={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: '1.35rem', fontWeight: 500, color: WHITE,
+                  lineHeight: 1.3, mb: 1.5,
+                }}>
+                  {a.title}
+                </Typography>
+                <Typography sx={{ fontSize: '0.85rem', fontWeight: 300, color: 'rgba(255,255,255,0.62)', lineHeight: 1.75, mb: 2.5 }}>
+                  {a.excerpt}
+                </Typography>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Typography sx={{ fontSize: '0.66rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>
+                    Coming Soon
+                  </Typography>
+                  <Box className="read-arrow" sx={{
+                    fontSize: 14, color: GOLD, transition: 'all 0.4s', opacity: 0.6,
+                    display: 'inline-flex',
+                  }}>
+                    <i className="fi fi-rr-arrow-right"></i>
+                  </Box>
+                </Stack>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+
+        <Box className="reveal" sx={{ mt: 6, textAlign: 'center' }}>
+          <Typography sx={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.48)', letterSpacing: '0.04em', mb: 2 }}>
+            More articles and legal updates are on their way. Subscribe below to be notified when new content is published.
+          </Typography>
+          {!subscribed ? (
+            <Box
+              component="form"
+              onSubmit={(e) => { e.preventDefault(); if (email) setSubscribed(true); }}
+              sx={{
+                display: 'inline-flex', maxWidth: 460, width: '100%',
+                border: `1px solid rgba(200,169,110,0.3)`,
+                background: 'rgba(255,255,255,0.04)',
+                backdropFilter: 'blur(6px)',
+                transition: 'border-color 0.3s',
+                '&:focus-within': { borderColor: GOLD },
+              }}
+            >
+              <InputBase
+                value={email} onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address" required type="email"
+                sx={{
+                  flex: 1, px: 2, py: 1.2,
+                  color: WHITE, fontSize: '0.85rem', fontWeight: 300,
+                  '& input::placeholder': { color: 'rgba(255,255,255,0.4)', opacity: 1 },
+                }}
+              />
+              <Button
+                type="submit" className="btn-shine"
+                sx={{
+                  background: GOLD, color: NAVY, borderRadius: 0,
+                  px: 3, fontSize: '0.7rem', fontWeight: 600,
+                  letterSpacing: '0.18em', whiteSpace: 'nowrap',
+                  '&:hover': { background: GOLD_LIGHT },
+                }}
+              >
+                Subscribe
+              </Button>
+            </Box>
+          ) : (
+            <Fade in timeout={800}>
+              <Typography sx={{ fontSize: '0.85rem', color: GOLD, letterSpacing: '0.05em', display: 'inline-flex', alignItems: 'center', gap: 1 }}>
+                <i className="fi fi-sr-check-circle" style={{ fontSize: 16 }}></i>
+                You&apos;re subscribed. We&apos;ll notify you when new articles are published.
+              </Typography>
+            </Fade>
+          )}
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+// ── WHY US ───────────────────────────────────────────────────────────────
+function WhyUs() {
+  return (
+    <Box id="why" sx={{ background: IVORY, py: { xs: 8, md: 14 }, px: '5vw' }}>
+      <Grid container spacing={{ xs: 4, md: 10 }} alignItems="center">
+        <Grid item xs={12} md={6} className="reveal">
+          <Box sx={{
+            position: 'relative',
+            aspectRatio: '4 / 5', maxHeight: 560,
+          }}>
+            <Box sx={{
+              position: 'absolute', top: 0, left: 0, right: '15%', bottom: '15%',
+              background: `linear-gradient(165deg, ${NAVY} 0%, ${NAVY_LIGHT} 100%)`,
+              border: `1px solid ${GOLD}`,
+              display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+              p: { xs: 3, md: 4 }, color: WHITE, overflow: 'hidden',
+              '&::before': {
+                content: '"“"', position: 'absolute', top: 10, left: 16,
+                fontFamily: "'Cormorant Garamond', serif", fontSize: 220,
+                color: GOLD, opacity: 0.12, lineHeight: 1,
+              },
+            }}>
+              <Typography sx={{ fontSize: '0.62rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: GOLD_LIGHT, mb: 2, fontWeight: 500 }}>
+                Our Commitment
+              </Typography>
+              <Typography sx={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: '1.35rem', md: '1.7rem' },
+                fontStyle: 'italic', fontWeight: 400,
+                color: WHITE, lineHeight: 1.45,
+              }}>
+                &ldquo;We pursue every matter with the full force of our expertise and character.&rdquo;
+              </Typography>
+              <Typography sx={{ mt: 2, fontSize: '0.78rem', fontWeight: 300, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.05em' }}>
+                — Collins Kipkemoi Sang, Managing Partner
+              </Typography>
+            </Box>
+            <Box sx={{
+              position: 'absolute', bottom: 0, right: 0, width: '55%', height: '45%',
+              background: `linear-gradient(135deg, ${GOLD} 0%, ${GOLD_LIGHT} 100%)`,
+              display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+              p: 2,
+              boxShadow: '0 20px 50px -24px rgba(200,169,110,0.7)',
+              animation: 'float 6s ease-in-out infinite',
+            }}>
+              <Typography sx={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: '2.8rem', md: '3.8rem' },
+                fontWeight: 400, color: NAVY, lineHeight: 1,
+              }}>
+                P105
+              </Typography>
+              <Typography sx={{
+                fontSize: '0.66rem', letterSpacing: '0.18em', textTransform: 'uppercase',
+                color: NAVY_MID, mt: 0.8, textAlign: 'center', fontWeight: 500,
+              }}>
+                LSK Registration<br />25457 / 25
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Box className="reveal">
+            <SectionEyebrow>Why Choose Us</SectionEyebrow>
+            <SectionTitle>
+              Built on{' '}
+              <Box component="em" className="underline-gold" sx={{ fontStyle: 'italic', color: GOLD_DEEP }}>Principle</Box>
+              {' '}and Proven{' '}
+              <Box component="em" className="underline-gold" sx={{ fontStyle: 'italic', color: GOLD_DEEP }}>Expertise</Box>
+            </SectionTitle>
+          </Box>
+          <Stack spacing={0} className="reveal">
+            {WHY_ITEMS.map((w, i) => (
+              <Box
+                key={w.title}
+                sx={{
+                  display: 'flex', gap: 2.2, alignItems: 'flex-start',
+                  py: 2.4,
+                  borderBottom: i < WHY_ITEMS.length - 1 ? `1px solid rgba(11,27,46,0.08)` : 'none',
+                  transition: 'all 0.4s',
+                  '&:hover': { pl: 1, borderBottomColor: GOLD, '& .check-box': { background: GOLD, transform: 'rotate(-4deg)' } },
+                }}
+              >
+                <Box
+                  className="check-box"
+                  sx={{
+                    width: 28, height: 28, minWidth: 28,
+                    border: `1.5px solid ${GOLD}`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: GOLD, transition: 'all 0.4s',
+                    '&:hover, .check-box:hover': { background: GOLD, color: WHITE },
+                    '& i': { transition: 'color 0.4s' },
+                  }}
+                >
+                  <i className="fi fi-br-check" style={{ fontSize: 11 }}></i>
+                </Box>
+                <Box>
+                  <Typography sx={{ fontSize: '1rem', fontWeight: 500, color: NAVY, mb: 0.6 }}>{w.title}</Typography>
+                  <Typography sx={{ fontSize: '0.88rem', fontWeight: 300, color: 'rgba(11,27,46,0.68)', lineHeight: 1.75 }}>
+                    {w.desc}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Stack>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+// ── CONTACT ──────────────────────────────────────────────────────────────
+function Contact() {
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [form, setForm] = useState({ fname: '', lname: '', email: '', phone: '', practice: '', message: '' });
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  const details = [
+    { label: 'Address',   icon: 'fi-rr-marker',     value: <>Kirima House, Moktar Daddah Street<br />Nairobi, Kenya</> },
+    { label: 'Telephone', icon: 'fi-rr-phone-call', value: <a href="tel:+254718076309">+254 718 076 309</a> },
+    { label: 'Email',     icon: 'fi-rr-envelope',   value: <a href="mailto:collinskipkemoilaw@outlook.com">collinskipkemoilaw@outlook.com</a> },
+    { label: 'LSK Reg.',  icon: 'fi-rr-badge',      value: 'P105/25457/25' },
+    { label: 'Hours',     icon: 'fi-rr-clock',      value: <>Monday – Friday: 8:00 am – 5:30 pm<br />Saturday: By appointment</> },
+  ];
+
+  return (
+    <Box id="contact" sx={{
+      background: NAVY, color: WHITE, py: { xs: 8, md: 14 }, px: '5vw',
+      position: 'relative', overflow: 'hidden',
+    }}>
+      <Box sx={{
+        position: 'absolute', top: '-10%', right: '-10%',
+        width: 600, height: 600, borderRadius: '50%',
+        background: `radial-gradient(circle, rgba(200,169,110,0.09), transparent 70%)`,
+        filter: 'blur(60px)',
+      }} />
+      <Box className="dot-pattern" sx={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
+
+      <Grid container spacing={{ xs: 4, md: 10 }} sx={{ position: 'relative', zIndex: 1 }}>
+        <Grid item xs={12} md={6} className="reveal">
+          <SectionEyebrow dark>Get In Touch</SectionEyebrow>
+          <SectionTitle dark>
+            Start a{' '}
+            <Box component="em" className="underline-gold" sx={{ fontStyle: 'italic', color: GOLD_LIGHT }}>
+              Conversation
+            </Box>
+          </SectionTitle>
+          <Typography sx={{ color: 'rgba(255,255,255,0.68)', fontWeight: 300, lineHeight: 1.85, mb: 4 }}>
+            Whether you are an individual navigating a personal legal matter or a corporation
+            requiring strategic counsel, we invite you to reach out. Consultations are handled in
+            the strictest confidence.
+          </Typography>
+
+          <Stack spacing={0}>
+            {details.map((d, i) => (
+              <Box
+                key={d.label}
+                sx={{
+                  display: 'grid', gridTemplateColumns: '140px 1fr', alignItems: 'start',
+                  py: 2, gap: 2,
+                  borderBottom: i < details.length - 1 ? `1px solid rgba(200,169,110,0.15)` : 'none',
+                  transition: 'all 0.35s',
+                  '&:hover': {
+                    pl: 1,
+                    '& .detail-icon': { color: GOLD_LIGHT, transform: 'scale(1.1)' },
+                  },
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Box className="detail-icon" sx={{
+                    color: GOLD, fontSize: 14, display: 'inline-flex',
+                    transition: 'all 0.35s',
+                  }}>
+                    <i className={`fi ${d.icon}`}></i>
+                  </Box>
+                  <Typography sx={{ fontSize: '0.66rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD_LIGHT, fontWeight: 500 }}>
+                    {d.label}
+                  </Typography>
+                </Box>
+                <Typography sx={{
+                  fontSize: '0.9rem', fontWeight: 300, color: WHITE, lineHeight: 1.6,
+                  '& a': { color: WHITE, textDecoration: 'none', borderBottom: `1px solid rgba(200,169,110,0.3)`, transition: 'all 0.3s' },
+                  '& a:hover': { color: GOLD_LIGHT, borderBottomColor: GOLD_LIGHT },
+                }}>
+                  {d.value}
+                </Typography>
+              </Box>
+            ))}
+          </Stack>
+        </Grid>
+
+        <Grid item xs={12} md={6} className="reveal">
+          <Box
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault(); setSending(true);
+              setTimeout(() => { setSending(false); setSent(true); }, 1100);
+            }}
+            sx={{
+              background: 'rgba(255,255,255,0.03)',
+              backdropFilter: 'blur(8px)',
+              border: `1px solid rgba(200,169,110,0.18)`,
+              p: { xs: 3, md: 4.5 },
+              position: 'relative',
+              '&::before': {
+                content: '""', position: 'absolute', top: 0, left: 0,
+                width: 60, height: 2, background: GOLD,
+              },
+            }}
+          >
+            <Typography sx={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.6rem', color: WHITE, mb: 3, fontWeight: 400 }}>
+              Make an enquiry
+            </Typography>
+            {!sent ? (
+              <Stack spacing={2.5}>
+                <Grid container spacing={2}>
+                  {[['fname','First Name','John'],['lname','Last Name','Smith']].map(([k,label,ph]) => (
+                    <Grid item xs={12} sm={6} key={k}>
+                      <DarkField label={label} placeholder={ph} value={form[k]} onChange={set(k)} required />
+                    </Grid>
+                  ))}
+                </Grid>
+                <DarkField label="Email Address" placeholder="john.smith@example.com" type="email" value={form.email} onChange={set('email')} required />
+                <DarkField label="Phone Number" placeholder="+254 700 000 000" value={form.phone} onChange={set('phone')} />
+                <DarkField label="Area of Interest" select value={form.practice} onChange={set('practice')}>
+                  <MenuItem value="">Select a practice area</MenuItem>
+                  {PRACTICE_AREAS.map((p) => (
+                    <MenuItem key={p.title} value={p.title}>{p.title}</MenuItem>
+                  ))}
+                </DarkField>
+                <DarkField label="Brief Description of Your Matter" placeholder="Please briefly describe how we may assist you..." multiline rows={4} value={form.message} onChange={set('message')} />
+                <Button
+                  type="submit" className="btn-shine"
+                  disabled={sending}
+                  sx={{
+                    alignSelf: 'flex-start', background: GOLD, color: NAVY,
+                    px: 4, py: 1.5, fontWeight: 600, fontSize: '0.75rem',
+                    boxShadow: '0 14px 30px -14px rgba(200,169,110,0.6)',
+                    '&:hover': { background: GOLD_LIGHT, transform: 'translateY(-1px)' },
+                    '&:disabled': { background: GOLD, color: NAVY, opacity: 0.7 },
+                  }}
+                >
+                  {sending ? 'Sending…' : 'Send Enquiry  →'}
+                </Button>
+              </Stack>
+            ) : (
+              <Fade in timeout={700}>
+                <Box sx={{ py: 4, textAlign: 'center' }}>
+                  <Box sx={{
+                    width: 64, height: 64, margin: '0 auto 20px',
+                    borderRadius: '50%', background: GOLD,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: NAVY, fontSize: 28,
+                    animation: 'float 3s ease-in-out infinite',
+                  }}>
+                    <i className="fi fi-sr-check"></i>
+                  </Box>
+                  <Typography sx={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.6rem', color: WHITE, mb: 1, fontWeight: 400 }}>
+                    Thank you.
+                  </Typography>
+                  <Typography sx={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', fontWeight: 300 }}>
+                    We will be in touch within 24 hours.
+                  </Typography>
+                </Box>
+              </Fade>
+            )}
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+// Styled dark form field for contact
+function DarkField({ label, children, select, multiline, rows, ...props }) {
+  return (
+    <TextField
+      label={label} select={select} multiline={multiline} rows={rows}
+      fullWidth variant="outlined" InputLabelProps={{ shrink: true }}
+      SelectProps={select ? {
+        MenuProps: {
+          PaperProps: { sx: { background: NAVY_MID, color: WHITE, borderRadius: 0, border: `1px solid rgba(200,169,110,0.2)` } }
+        }
+      } : undefined}
+      {...props}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          background: 'rgba(255,255,255,0.04)',
+          color: WHITE,
+          borderRadius: 0,
+          transition: 'all 0.3s',
+          '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(200,169,110,0.22)', transition: 'border-color 0.3s' },
+          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: GOLD_LIGHT },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: GOLD, borderWidth: 1 },
+          '& input, & textarea, & .MuiSelect-select': {
+            color: WHITE, fontSize: '0.9rem', fontWeight: 300,
+          },
+          '& input::placeholder, & textarea::placeholder': { color: 'rgba(255,255,255,0.35)', opacity: 1 },
+        },
+        '& .MuiInputLabel-root': {
+          color: 'rgba(255,255,255,0.55)', fontSize: '0.68rem',
+          letterSpacing: '0.2em', textTransform: 'uppercase',
+        },
+        '& .MuiInputLabel-root.Mui-focused': { color: GOLD_LIGHT },
+        '& .MuiSvgIcon-root': { color: GOLD },
+      }}
+    >
+      {children}
+    </TextField>
+  );
+}
+
+// ── FOOTER ───────────────────────────────────────────────────────────────
+function Footer() {
+  return (
+    <Box component="footer" sx={{
+      background: NAVY_DEEP, color: 'rgba(255,255,255,0.7)',
+      py: { xs: 5, md: 6 }, px: '5vw',
+      borderTop: `1px solid rgba(200,169,110,0.15)`,
+      position: 'relative',
+      '&::before': {
+        content: '""', position: 'absolute', top: 0, left: '15%', right: '15%',
+        height: 1, background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
+      },
+    }}>
+      <Grid container spacing={4} sx={{ mb: 4 }}>
+        <Grid item xs={12} md={6}>
+          <Stack direction="row" alignItems="center" spacing={1.5} mb={1.5}>
+            <Box sx={{
+              width: 34, height: 34, border: `1.2px solid ${GOLD}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: GOLD,
+            }}>C</Box>
+            <Typography sx={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: '1.15rem', fontWeight: 500, color: GOLD_LIGHT,
+              letterSpacing: '0.02em',
+            }}>
+              Collins Kipkemoi Sang &amp; Company Advocates
+            </Typography>
+          </Stack>
+          <Typography sx={{ fontSize: '0.85rem', fontWeight: 300, color: 'rgba(255,255,255,0.45)', lineHeight: 1.85, maxWidth: 420 }}>
+            A full-service law firm committed to delivering justice, integrity and excellence to
+            every client — grounded in the timeless principle that justice must roll on like a
+            never-failing stream.
+          </Typography>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Typography sx={{ fontSize: '0.7rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: GOLD, mb: 2, fontWeight: 500 }}>
+            Practice Areas
+          </Typography>
+          <Stack spacing={1.2}>
+            {['Succession & Estate','Property & Conveyancing','Property Management','Rental & Tenancy','Company & Corporate','Tax Advisory','IT Law','Litigation'].map((t) => (
+              <Box key={t} component="a" href="#practice" sx={{
+                fontSize: '0.82rem', fontWeight: 300, textDecoration: 'none',
+                color: 'rgba(255,255,255,0.55)', transition: 'all 0.3s',
+                '&:hover': { color: GOLD_LIGHT, paddingLeft: '4px' },
+              }}>
+                {t}
+              </Box>
+            ))}
+          </Stack>
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <Typography sx={{ fontSize: '0.7rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: GOLD, mb: 2, fontWeight: 500 }}>
+            The Firm
+          </Typography>
+          <Stack spacing={1.2}>
+            {[['About the Firm','#about'],['Our Attorneys','#team'],['Legal Insights','#insights'],['Why Choose Us','#why'],['Contact & Enquiries','#contact']].map(([t,h]) => (
+              <Box key={t} component="a" href={h} sx={{
+                fontSize: '0.82rem', fontWeight: 300, textDecoration: 'none',
+                color: 'rgba(255,255,255,0.55)', transition: 'all 0.3s',
+                '&:hover': { color: GOLD_LIGHT, paddingLeft: '4px' },
+              }}>
+                {t}
+              </Box>
+            ))}
+          </Stack>
+        </Grid>
+      </Grid>
+      <Divider sx={{ borderColor: 'rgba(200,169,110,0.12)', my: 2 }} />
+      <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={1}>
+        <Typography sx={{ fontSize: '0.72rem', fontWeight: 300, color: 'rgba(255,255,255,0.38)' }}>
+          © 2025 Collins Kipkemoi Sang &amp; Company Advocates. All rights reserved.
+        </Typography>
+        <Typography sx={{ fontSize: '0.72rem', fontWeight: 300, color: 'rgba(255,255,255,0.38)', letterSpacing: '0.06em' }}>
+          LSK Reg. No. P105/25457/25 &nbsp;·&nbsp; Nairobi, Kenya
+        </Typography>
+      </Stack>
+    </Box>
+  );
+}
+
+// ── SCROLL PROGRESS ──────────────────────────────────────────────────────
+function ScrollProgress() {
+  useEffect(() => {
+    const bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+    const onScroll = () => {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      bar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return null;
+}
+
+// ── APP ──────────────────────────────────────────────────────────────────
+function App() {
+  useReveal();
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ScrollProgress />
+      <Navigation />
+      <Hero />
+      <StatsBar />
+      <About />
+      <PracticeAreas />
+      <Team />
+      <Insights />
+      <WhyUs />
+      <Contact />
+      <Footer />
+    </ThemeProvider>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
