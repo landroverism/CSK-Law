@@ -121,11 +121,11 @@ const TEAM = [
   },
   {
     initials: "WO",
-    name: "Wesley Omondi",
+    name: "Wesley Omondi Okoth",
     role: "Partner",
     qual: "LLB (Hons) · Advocate of the High Court of Kenya",
-    bio: "Wesley is a Partner in the firm's Property Law and Corporate departments. He advises domestic and international clients on all aspects of real estate transactions, land law, and corporate structuring including company incorporation and tax registration.",
-    tags: ["Property Law", "Conveyancing", "Company Law", "Incorporation"],
+    bio: "Wesley Omondi Okoth is an Advocate of the High Court of Kenya whose practice focuses on corporate and commercial law, TMT and technology, intellectual property, regulatory compliance, and cross-border advisory across East Africa. He advises businesses on commercial contracts, governance, restructurings, market entry, product and operational legal risk, data protection, employment, and sector-facing regulatory issues.\n\nHis work includes drafting and negotiating supply, distribution, franchise, licensing, SaaS, outsourcing, employment, consultancy, and data-processing agreements; supporting M&A, JV, and secured lending matters; and coordinating filings and approvals involving CAK, COMESA, ODPC, CBK, and KRA. Through Trademarkia, he leads East Africa-facing intellectual property advisory, helping businesses navigate brand protection, filing strategy, and market entry across Kenya, Uganda, Tanzania, Rwanda, Ethiopia, and ARIPO.\n\nSelected client and matter experience includes advice involving M-Pesa, Starlink, Amazon, Netflix, MTN, SIEMENS, Deel, Bolt, the World Bank, a leading Pan-African bank on a USD 57 million shared-services-centre assessment, a Dubai-based logistics company on a KES 32 million automotive acquisition, and a regional oil marketing company on a USD 52 million fuel transaction.",
+    tags: ["Corporate & Commercial", "TMT / Tech", "IP", "Compliance", "Employment", "ESG"],
     photo: "/photos/wesley.png",
   },
   {
@@ -819,9 +819,13 @@ function TeamCard({ m, compact }) {
 
         <Box sx={{ width: 28, height: 2, bgcolor: GOLD, mb: 2 }} />
 
-        <Typography sx={{ fontSize: "0.85rem", color: "rgba(11,27,46,0.72)", lineHeight: 1.8, fontWeight: 300, mb: 2.5 }}>
-          {m.bio}
-        </Typography>
+        <Stack spacing={1.4} sx={{ mb: 2.5 }}>
+          {m.bio.split("\n\n").map((para, i) => (
+            <Typography key={i} sx={{ fontSize: "0.85rem", color: "rgba(11,27,46,0.72)", lineHeight: 1.8, fontWeight: 300 }}>
+              {para}
+            </Typography>
+          ))}
+        </Stack>
 
         <Stack direction="row" flexWrap="wrap" gap={0.7}>
           {m.tags.map((t) => (
