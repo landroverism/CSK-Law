@@ -1220,36 +1220,54 @@ function Footer() {
   ];
 
   return (
-    <Box component="footer" sx={{ bgcolor: NAVY_DEEP, py: { xs: 6, md: 8 }, borderTop: `1px solid rgba(200,169,110,0.14)`, position: "relative" }}>
-      <Box sx={{ position: "absolute", top: 0, left: "12%", right: "12%", height: 1, background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)` }} />
+    <Box
+      component="footer"
+      sx={{
+        bgcolor: "#050d18",
+        py: { xs: 6, md: 8 },
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        position: "relative",
+      }}
+    >
+      {/* Subtle top hairline — muted, not gold */}
+      <Box sx={{ position: "absolute", top: 0, left: "12%", right: "12%", height: 1, bgcolor: "rgba(255,255,255,0.07)" }} />
+
       <Container maxWidth="lg">
         <Grid container spacing={5} sx={{ mb: 5 }}>
           {/* Brand */}
           <Grid item xs={12} md={5}>
             <Stack direction="row" spacing={1.4} alignItems="center" mb={2}>
-              <Box sx={{ width: 36, height: 36, border: `2px solid ${GOLD}`, display: "grid", placeItems: "center", color: GOLD, fontWeight: 800 }}>C</Box>
-              <Typography sx={{ color: GOLD_LIGHT, fontWeight: 700, fontSize: "1rem" }}>
+              <Box sx={{
+                width: 36, height: 36,
+                border: "1.5px solid rgba(255,255,255,0.2)",
+                display: "grid", placeItems: "center",
+                color: "rgba(255,255,255,0.7)", fontWeight: 800,
+              }}>C</Box>
+              <Typography sx={{ color: "rgba(255,255,255,0.82)", fontWeight: 600, fontSize: "0.95rem" }}>
                 Collins Kipkemoi Sang & Company Advocates
               </Typography>
             </Stack>
-            <Typography sx={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.42)", lineHeight: 1.85, maxWidth: 420, fontWeight: 300, mb: 3 }}>
+            <Typography sx={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.85, maxWidth: 420, fontWeight: 300, mb: 3 }}>
               A full-service law firm committed to delivering justice, integrity, and excellence to every client — grounded in the timeless principle that justice must roll on like a never-failing stream.
             </Typography>
             <Stack spacing={1}>
               <Stack direction="row" spacing={1.2} alignItems="center">
-                <FaPhoneAlt style={{ color: GOLD, fontSize: 12 }} />
-                <Typography sx={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.55)", fontWeight: 300 }}>+254 718 076 309</Typography>
+                <FaPhoneAlt style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }} />
+                <Typography sx={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.5)", fontWeight: 300 }}>+254 718 076 309</Typography>
               </Stack>
               <Stack direction="row" spacing={1.2} alignItems="center">
-                <FaEnvelope style={{ color: GOLD, fontSize: 12 }} />
-                <Typography sx={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.55)", fontWeight: 300 }}>collins@kipkemoisangadvocates.com</Typography>
+                <FaEnvelope style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }} />
+                <Typography sx={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.5)", fontWeight: 300 }}>collins@kipkemoisangadvocates.com</Typography>
               </Stack>
             </Stack>
           </Grid>
 
           {cols.map((col) => (
             <Grid item xs={6} md={3} key={col.title}>
-              <Typography sx={{ fontSize: "0.68rem", letterSpacing: 2.5, textTransform: "uppercase", color: GOLD, mb: 2.5, fontWeight: 700 }}>
+              <Typography sx={{
+                fontSize: "0.66rem", letterSpacing: 2.2, textTransform: "uppercase",
+                color: "rgba(255,255,255,0.45)", mb: 2.5, fontWeight: 600,
+              }}>
                 {col.title}
               </Typography>
               <Stack spacing={1.4}>
@@ -1257,9 +1275,10 @@ function Footer() {
                   <Box
                     key={label} component="a" href={href}
                     sx={{
-                      fontSize: "0.82rem", fontWeight: 300, color: "rgba(255,255,255,0.5)", textDecoration: "none",
-                      transition: "all 0.25s",
-                      "&:hover": { color: GOLD_LIGHT, pl: "4px" },
+                      fontSize: "0.82rem", fontWeight: 300,
+                      color: "rgba(255,255,255,0.42)", textDecoration: "none",
+                      transition: "all 0.25s ease",
+                      "&:hover": { color: "rgba(255,255,255,0.85)", pl: "4px" },
                     }}
                   >
                     {label}
@@ -1270,13 +1289,13 @@ function Footer() {
           ))}
         </Grid>
 
-        <Divider sx={{ borderColor: "rgba(200,169,110,0.14)", mb: 3 }} />
+        <Divider sx={{ borderColor: "rgba(255,255,255,0.07)", mb: 3 }} />
 
         <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems={{ xs: "flex-start", sm: "center" }} spacing={1}>
-          <Typography sx={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.35)", fontWeight: 300 }}>
+          <Typography sx={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.28)", fontWeight: 300 }}>
             © 2026 Collins Kipkemoi Sang & Company Advocates. All rights reserved.
           </Typography>
-          <Typography sx={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.35)", fontWeight: 300 }}>
+          <Typography sx={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.28)", fontWeight: 300 }}>
             LSK Reg. No. P105/25457/25 · Nairobi, Kenya
           </Typography>
         </Stack>
