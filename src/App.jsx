@@ -190,6 +190,7 @@ function ScrollProgress() {
 
 // ── HERO ──────────────────────────────────────────────────────────────────
 function Hero() {
+  const navigate = useNavigate();
   const [mouse, setMouse] = useState({ x: 50, y: 50 });
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -303,11 +304,29 @@ function Hero() {
             }}
           >
             Justice.{" "}
-            <Box component="span"
+            <Box
+              component="button"
+              type="button"
+              aria-label="Open blog workspace"
+              onClick={() => {
+                scrollToTop();
+                navigate("/blog/panel");
+              }}
               sx={{
                 background: `linear-gradient(110deg, ${GOLD_LIGHT}, #f5e6c4, ${GOLD})`,
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
+                border: "none",
+                p: 0,
+                m: 0,
+                font: "inherit",
+                fontSize: "inherit",
+                fontWeight: "inherit",
+                letterSpacing: "inherit",
+                lineHeight: "inherit",
+                cursor: "pointer",
+                verticalAlign: "baseline",
               }}
             >
               Integrity.
@@ -590,8 +609,7 @@ function PracticeAreas() {
 }
 
 // ── TEAM CARD ─────────────────────────────────────────────────────────────
-function TeamCard({ m, compact, blogPanelEntry }) {
-  const navigate = useNavigate();
+function TeamCard({ m, compact }) {
   const [hov, setHov] = useState(false);
 
   return (
@@ -658,36 +676,10 @@ function TeamCard({ m, compact, blogPanelEntry }) {
         }} />
 
         {/* Role badge */}
-        <Box
-          component={blogPanelEntry ? "button" : "div"}
-          type={blogPanelEntry ? "button" : undefined}
-          onClick={
-            blogPanelEntry
-              ? (e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  scrollToTop();
-                  navigate("/blog/panel");
-                }
-              : undefined
-          }
-          aria-label={blogPanelEntry ? "Open blog workspace" : undefined}
-          sx={{
-            position: "absolute", bottom: 10, left: 12,
-            bgcolor: "rgba(200,169,110,0.92)", px: 1.2, py: 0.3, borderRadius: 0,
-            ...(blogPanelEntry
-              ? {
-                  cursor: "pointer",
-                  border: "none",
-                  font: "inherit",
-                  textAlign: "left",
-                  display: "block",
-                  transition: "background 0.2s ease",
-                  "&:hover": { bgcolor: GOLD },
-                }
-              : {}),
-          }}
-        >
+        <Box sx={{
+          position: "absolute", bottom: 10, left: 12,
+          bgcolor: "rgba(200,169,110,0.92)", px: 1.2, py: 0.3, borderRadius: 0,
+        }}>
           <Typography sx={{ fontSize: "0.58rem", fontWeight: 700, letterSpacing: 1.8, textTransform: "uppercase", color: NAVY }}>
             {m.role}
           </Typography>
@@ -778,7 +770,7 @@ function Team() {
           {TEAM.map((m, i) => (
             <Grid item xs={12} sm={6} md={4} key={m.name}>
               <MBox delay={i * 0.08}>
-                <TeamCard m={m} blogPanelEntry={m.role === "Managing Partner & Founder"} />
+                <TeamCard m={m} />
               </MBox>
             </Grid>
           ))}
