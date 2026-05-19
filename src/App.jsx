@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  AppBar,
   Box,
   Button,
   Card,
@@ -8,16 +7,18 @@ import {
   Chip,
   Container,
   Divider,
-  Drawer,
   Grid,
-  IconButton,
   Stack,
   TextField,
-  Toolbar,
   Typography,
   MenuItem,
 } from "@mui/material";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import SiteNavbar from "./SiteNavbar";
+import { BlogListPage, BlogPostPage } from "./blog/BlogPublic";
+import BlogPanel from "./blog/BlogPanel";
+import { scrollToTop } from "./scrollToTop";
 import {
   FaBalanceScale,
   FaBuilding,
@@ -35,7 +36,6 @@ import {
   FaShieldAlt,
   FaComments,
 } from "react-icons/fa";
-import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 import { MdVerified } from "react-icons/md";
 
 // ── PALETTE ───────────────────────────────────────────────────────────────
@@ -170,14 +170,6 @@ const WHY_ITEMS = [
   { icon: <MdVerified />, title: "Full-Service Capability",           desc: "From registering your company on day one to resolving a complex estate dispute, we are your firm for life." },
 ];
 
-const NAV = [
-  ["About",    "#about"],
-  ["Practice", "#practice"],
-  ["Team",     "#team"],
-  ["Why Us",   "#why"],
-  ["Contact",  "#contact"],
-];
-
 // ── SCROLL PROGRESS ───────────────────────────────────────────────────────
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -193,143 +185,6 @@ function ScrollProgress() {
         boxShadow: `0 0 14px ${GOLD}88`,
       }}
     />
-  );
-}
-
-// ── NAVBAR ────────────────────────────────────────────────────────────────
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-
-  return (
-    <>
-      <AppBar
-        position="fixed"
-        elevation={0}
-        sx={{
-          top: 3,
-          background: scrolled ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.80)",
-          backdropFilter: "blur(14px)",
-          borderBottom: scrolled ? "1px solid rgba(11,27,46,0.09)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 6px 28px -16px rgba(11,27,46,0.2)" : "none",
-          transition: "all 0.45s ease",
-        }}
-      >
-        <Toolbar
-          sx={{
-            maxWidth: 1280, width: "100%", mx: "auto", px: { xs: 2, md: 5 },
-            py: scrolled ? 0.8 : 1.4,
-            transition: "padding 0.3s ease",
-            justifyContent: "space-between",
-            minHeight: "auto !important",
-          }}
-        >
-          {/* Logo */}
-          <Box
-            component="a" href="#"
-            sx={{ display: "flex", alignItems: "center", gap: 1.4, textDecoration: "none",
-                  "&:hover .logo-box": { background: GOLD, color: NAVY } }}
-          >
-            <Box
-              className="logo-box"
-              sx={{
-                width: 36, height: 36, border: `2px solid ${GOLD}`,
-                display: "grid", placeItems: "center",
-                color: GOLD, fontWeight: 800, fontSize: 15,
-                transition: "all 0.4s ease",
-              }}
-            >
-              C
-            </Box>
-            <Box>
-              <Typography sx={{ fontWeight: 700, fontSize: "0.95rem", color: NAVY, lineHeight: 1.1 }}>
-                Collins Kipkemoi Sang
-              </Typography>
-              <Typography sx={{ fontSize: "0.6rem", color: "rgba(11,27,46,0.5)", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                & Company Advocates
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* Desktop nav */}
-          <Stack direction="row" spacing={4} alignItems="center" sx={{ display: { xs: "none", md: "flex" } }}>
-            {NAV.map(([label, href]) => (
-              <Box
-                key={href} component="a" href={href}
-                sx={{
-                  color: "rgba(11,27,46,0.75)", textDecoration: "none",
-                  fontSize: "0.8rem", fontWeight: 500, letterSpacing: 0.5,
-                  position: "relative", pb: "3px",
-                  "&::after": {
-                    content: '""', position: "absolute",
-                    bottom: 0, left: 0, width: "100%", height: 1.5,
-                    background: GOLD,
-                    transform: "scaleX(0)", transformOrigin: "right",
-                    transition: "transform 0.35s ease",
-                  },
-                  "&:hover": { color: NAVY },
-                  "&:hover::after": { transform: "scaleX(1)", transformOrigin: "left" },
-                }}
-              >
-                {label}
-              </Box>
-            ))}
-            <Button
-              href="#contact"
-              sx={{
-                background: GOLD, color: NAVY, fontWeight: 700,
-                fontSize: "0.75rem", px: 2.5, py: 0.85,
-                "&:hover": { background: GOLD_LIGHT, transform: "translateY(-1px)", boxShadow: `0 8px 20px -10px ${GOLD}cc` },
-                transition: "all 0.3s ease",
-              }}
-            >
-              Consult Us
-            </Button>
-          </Stack>
-
-          <IconButton sx={{ display: { xs: "flex", md: "none" }, color: NAVY }} onClick={() => setOpen(true)}>
-            <HiOutlineMenuAlt3 size={24} />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
-      {/* Mobile drawer */}
-      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}
-        PaperProps={{ sx: { width: 280, background: NAVY, color: "white", p: 3 } }}
-      >
-        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={4}>
-          <Typography sx={{ color: GOLD_LIGHT, fontWeight: 700 }}>Menu</Typography>
-          <IconButton sx={{ color: "white" }} onClick={() => setOpen(false)}><HiX /></IconButton>
-        </Stack>
-        <Stack spacing={3}>
-          {NAV.map(([label, href], i) => (
-            <Box
-              key={href} component="a" href={href} onClick={() => setOpen(false)}
-              sx={{
-                color: "white", textDecoration: "none", fontSize: "1.3rem", fontWeight: 600,
-                borderBottom: "1px solid rgba(200,169,110,0.18)", pb: 1.5,
-                transition: "color 0.2s, padding-left 0.2s",
-                "&:hover": { color: GOLD_LIGHT, pl: 1 },
-              }}
-            >
-              {label}
-            </Box>
-          ))}
-          <Button href="#contact" onClick={() => setOpen(false)}
-            sx={{ mt: 1, background: GOLD, color: NAVY, fontWeight: 700, py: 1.3,
-                  "&:hover": { background: GOLD_LIGHT } }}
-          >
-            Consult Us
-          </Button>
-        </Stack>
-      </Drawer>
-    </>
   );
 }
 
@@ -473,7 +328,7 @@ function Hero() {
         <MBox delay={0.3}>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems={{ xs: "flex-start", sm: "center" }}>
             <Button
-              href="#contact"
+              href="/#contact"
               sx={{
                 background: GOLD, color: NAVY, fontWeight: 700, fontSize: "0.82rem",
                 px: 4, py: 1.55,
@@ -484,7 +339,7 @@ function Hero() {
             >
               Book a Consultation
             </Button>
-            <Box component="a" href="#practice"
+            <Box component="a" href="/#practice"
               sx={{
                 color: "rgba(255,255,255,0.8)", textDecoration: "none",
                 fontSize: "0.82rem", fontWeight: 500, letterSpacing: 0.5,
@@ -735,7 +590,8 @@ function PracticeAreas() {
 }
 
 // ── TEAM CARD ─────────────────────────────────────────────────────────────
-function TeamCard({ m, compact }) {
+function TeamCard({ m, compact, blogPanelEntry }) {
+  const navigate = useNavigate();
   const [hov, setHov] = useState(false);
 
   return (
@@ -802,10 +658,36 @@ function TeamCard({ m, compact }) {
         }} />
 
         {/* Role badge */}
-        <Box sx={{
-          position: "absolute", bottom: 10, left: 12,
-          bgcolor: "rgba(200,169,110,0.92)", px: 1.2, py: 0.3, borderRadius: 0,
-        }}>
+        <Box
+          component={blogPanelEntry ? "button" : "div"}
+          type={blogPanelEntry ? "button" : undefined}
+          onClick={
+            blogPanelEntry
+              ? (e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  scrollToTop();
+                  navigate("/blog/panel");
+                }
+              : undefined
+          }
+          aria-label={blogPanelEntry ? "Open blog workspace" : undefined}
+          sx={{
+            position: "absolute", bottom: 10, left: 12,
+            bgcolor: "rgba(200,169,110,0.92)", px: 1.2, py: 0.3, borderRadius: 0,
+            ...(blogPanelEntry
+              ? {
+                  cursor: "pointer",
+                  border: "none",
+                  font: "inherit",
+                  textAlign: "left",
+                  display: "block",
+                  transition: "background 0.2s ease",
+                  "&:hover": { bgcolor: GOLD },
+                }
+              : {}),
+          }}
+        >
           <Typography sx={{ fontSize: "0.58rem", fontWeight: 700, letterSpacing: 1.8, textTransform: "uppercase", color: NAVY }}>
             {m.role}
           </Typography>
@@ -896,7 +778,7 @@ function Team() {
           {TEAM.map((m, i) => (
             <Grid item xs={12} sm={6} md={4} key={m.name}>
               <MBox delay={i * 0.08}>
-                <TeamCard m={m} />
+                <TeamCard m={m} blogPanelEntry={m.role === "Managing Partner & Founder"} />
               </MBox>
             </Grid>
           ))}
@@ -1202,20 +1084,21 @@ function Contact() {
 function Footer() {
   const cols = [
     { title: "Practice Areas", links: [
-      ["Succession & Estate",   "#practice"],
-      ["Property & Conveyancing","#practice"],
-      ["Company & Corporate",   "#practice"],
-      ["Tax Advisory",          "#practice"],
-      ["IT Law",                "#practice"],
-      ["Litigation",            "#practice"],
-      ["Property Management",   "#practice"],
-      ["Rental & Tenancy",      "#practice"],
+      ["Succession & Estate",   "/#practice"],
+      ["Property & Conveyancing","/#practice"],
+      ["Company & Corporate",   "/#practice"],
+      ["Tax Advisory",          "/#practice"],
+      ["IT Law",                "/#practice"],
+      ["Litigation",            "/#practice"],
+      ["Property Management",   "/#practice"],
+      ["Rental & Tenancy",      "/#practice"],
     ]},
     { title: "The Firm", links: [
-      ["About Us",       "#about"],
-      ["Our Attorneys",  "#team"],
-      ["Why Choose Us",  "#why"],
-      ["Contact",        "#contact"],
+      ["About Us",       "/#about"],
+      ["Our Attorneys",  "/#team"],
+      ["Blog",           "/blog"],
+      ["Why Choose Us",  "/#why"],
+      ["Contact",        "/#contact"],
     ]},
   ];
 
@@ -1305,11 +1188,50 @@ function Footer() {
 }
 
 // ── ROOT APP ──────────────────────────────────────────────────────────────
-export default function App() {
+function ScrollToTopOnNavigate() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    scrollToTop();
+  }, [pathname]);
+
+  return null;
+}
+
+function SiteLayout({ children }) {
   return (
     <Box sx={{ bgcolor: "#fff", color: NAVY }}>
+      <ScrollToTopOnNavigate />
       <ScrollProgress />
-      <Navbar />
+      <SiteNavbar />
+      {children}
+    </Box>
+  );
+}
+
+function MarketingLayout({ children }) {
+  return (
+    <SiteLayout>
+      {children}
+      <Footer />
+    </SiteLayout>
+  );
+}
+
+function HomePage() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    const id = hash.replace("#", "");
+    const t = window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+    return () => window.clearTimeout(t);
+  }, [hash]);
+
+  return (
+    <MarketingLayout>
       <Hero />
       <StatsBar />
       <About />
@@ -1317,7 +1239,38 @@ export default function App() {
       <Team />
       <WhyUs />
       <Contact />
-      <Footer />
-    </Box>
+    </MarketingLayout>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route
+        path="/blog/panel"
+        element={
+          <MarketingLayout>
+            <BlogPanel />
+          </MarketingLayout>
+        }
+      />
+      <Route
+        path="/blog"
+        element={
+          <MarketingLayout>
+            <BlogListPage />
+          </MarketingLayout>
+        }
+      />
+      <Route
+        path="/blog/:slug"
+        element={
+          <MarketingLayout>
+            <BlogPostPage />
+          </MarketingLayout>
+        }
+      />
+    </Routes>
   );
 }
