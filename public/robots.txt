@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /blog/panel
+
+Sitemap: https://kipkemoiadvocates.org/sitemap.xml

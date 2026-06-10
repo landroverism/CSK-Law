@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMutation, useQuery } from "convex/react";
 import {
   Alert,
   Box,
@@ -17,145 +18,213 @@ import {
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  bundleForLiveSite,
-  fetchLiveBundle,
-  loadWorkspace,
-  mergeLiveIntoWorkspace,
-  newPost,
-  saveWorkspace,
-  slugify,
-  syncPublishedToLiveCache,
-} from "./blogStorage";
+import { api } from "../../convex/_generated/api";
+import { slugify } from "./blogStorage";
+import { useBlogAdmin } from "./useBlogAdmin";
 
 const NAVY = "#0B1B2E";
 const GOLD = "#C8A96E";
 const IVORY = "#FAFAF7";
 
-function ensureUniqueSlug(posts, slug, excludeId) {
-  let s = slug || "post";
-  const taken = (x) => posts.some((p) => p.id !== excludeId && p.slug === x);
-  if (!taken(s)) return s;
-  let n = 2;
-  while (taken(`${s}-${n}`)) n += 1;
-  return `${s}-${n}`;
+function AdminLogin({ onLogin }) {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [checking, setChecking] = useState(false);
+  const verifyAdmin = useMutation(api.posts.verifyAdmin);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setChecking(true);
+    setError("");
+    try {
+      const result = await verifyAdmin({ adminSecret: password });
+      if (result.ok) onLogin(password);
+      else setError("Incorrect password.");
+    } catch {
+      setError("Could not sign in. Try again.");
+    } finally {
+      setChecking(false);
+    }
+  };
+
+  return (
+    <Box sx={{ bgcolor: IVORY, minHeight: "100vh", pt: { xs: 14, md: 16 }, pb: 8 }}>
+      <Container maxWidth="sm">
+        <Paper elevation={0} sx={{ p: 4, border: "1px solid rgba(11,27,46,0.1)", borderRadius: 2 }}>
+          <Typography sx={{ fontWeight: 800, fontSize: "1.5rem", color: NAVY, mb: 1 }}>
+            Blog admin
+          </Typography>
+          <Typography sx={{ color: "rgba(11,27,46,0.6)", mb: 3, lineHeight: 1.7 }}>
+            Sign in to write and publish articles. Posts go live instantly for all visitors.
+          </Typography>
+          <Box component="form" onSubmit={submit}>
+            <TextField
+              label="Admin password"
+              type="password"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+            {error ? (
+              <Typography sx={{ color: "error.main", fontSize: "0.85rem", mb: 2 }}>{error}</Typography>
+            ) : null}
+            <Button type="submit" variant="contained" fullWidth disabled={checking} sx={{ bgcolor: NAVY, fontWeight: 700 }}>
+              {checking ? "Signing in…" : "Sign in"}
+            </Button>
+          </Box>
+          <Button component={RouterLink} to="/" sx={{ mt: 2, color: GOLD }}>
+            Back to site
+          </Button>
+        </Paper>
+      </Container>
+    </Box>
+  );
 }
 
 export default function BlogPanel() {
-  const [workspace, setWorkspace] = useState(() => loadWorkspace());
-  const [selectedId, setSelectedId] = useState(() => {
-    const w = loadWorkspace();
-    return w.posts[0]?.id ?? null;
-  });
+  const { adminSecret, setAdminSecret, clearAdminSecret, isLoggedIn } = useBlogAdmin();
+  const posts = useQuery(api.posts.listAll, isLoggedIn ? { adminSecret } : "skip");
+  const createPost = useMutation(api.posts.create);
+  const savePost = useMutation(api.posts.save);
+  const publishPost = useMutation(api.posts.publish);
+  const unpublishPost = useMutation(api.posts.unpublish);
+  const removePost = useMutation(api.posts.remove);
+  const importFromJson = useMutation(api.posts.importFromJson);
+
+  const [selectedId, setSelectedId] = useState(null);
+  const [draft, setDraft] = useState(null);
   const [toast, setToast] = useState("");
+  const [busy, setBusy] = useState(false);
   const fileImportRef = useRef(null);
 
-  useEffect(() => {
-    syncPublishedToLiveCache(loadWorkspace());
-  }, []);
-
   const selected = useMemo(
-    () => workspace.posts.find((p) => p.id === selectedId) ?? null,
-    [workspace.posts, selectedId]
+    () => posts?.find((p) => p.id === selectedId) ?? null,
+    [posts, selectedId]
   );
 
-  const persist = useCallback((next) => {
-    saveWorkspace(next);
-    setWorkspace(next);
-    syncPublishedToLiveCache(next);
+  useEffect(() => {
+    if (!selected) {
+      setDraft(null);
+      return;
+    }
+    setDraft({
+      title: selected.title,
+      slug: selected.slug,
+      excerpt: selected.excerpt,
+      body: selected.body,
+      published: selected.published,
+    });
+  }, [selected]);
+
+  useEffect(() => {
+    if (posts && posts.length > 0 && !selectedId) {
+      setSelectedId(posts[0].id);
+    }
+  }, [posts, selectedId]);
+
+  const updateDraft = useCallback((patch) => {
+    setDraft((prev) => (prev ? { ...prev, ...patch } : prev));
   }, []);
 
-  const updateSelected = useCallback(
-    (patch) => {
-      if (!selectedId) return;
-      const now = new Date().toISOString();
-      const nextPosts = workspace.posts.map((p) =>
-        p.id === selectedId ? { ...p, ...patch, updatedAt: now } : p
-      );
-      const next = { version: 1, posts: nextPosts };
-      saveWorkspace(next);
-      setWorkspace(next);
-      if (patch.published !== undefined || nextPosts.find((p) => p.id === selectedId)?.published) {
-        syncPublishedToLiveCache(next);
-      }
-    },
-    [selectedId, workspace.posts]
-  );
+  if (!isLoggedIn) {
+    return <AdminLogin onLogin={setAdminSecret} />;
+  }
 
-  const addPost = () => {
-    const p = newPost();
-    const next = { version: 1, posts: [p, ...workspace.posts] };
-    persist(next);
-    setSelectedId(p.id);
-  };
-
-  const publishCurrent = () => {
-    if (!selected) return;
-    const slug = ensureUniqueSlug(
-      workspace.posts,
-      slugify(selected.slug || selected.title),
-      selected.id
+  if (posts === undefined) {
+    return (
+      <Box sx={{ bgcolor: IVORY, minHeight: "100vh", pt: 20, textAlign: "center" }}>
+        <Typography sx={{ color: "rgba(11,27,46,0.5)" }}>Loading workspace…</Typography>
+      </Box>
     );
-    const title = selected.title?.trim() || "Untitled";
-    const now = new Date().toISOString();
-    const nextPosts = workspace.posts.map((p) =>
-      p.id === selectedId ? { ...p, slug, title, published: true, updatedAt: now } : p
-    );
-    const next = { version: 1, posts: nextPosts };
-    persist(next);
-    setToast("Published — visible on the Blog page now. Download blog-data.json for all visitors on the live site.");
+  }
+
+  const addPost = async () => {
+    setBusy(true);
+    try {
+      const id = await createPost({ adminSecret });
+      setSelectedId(id);
+      setToast("New article created.");
+    } catch (err) {
+      setToast(err?.message || "Could not create article.");
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const unpublishCurrent = () => {
+  const saveCurrent = async () => {
+    if (!selected || !draft) return;
+    setBusy(true);
+    try {
+      const slug = draft.slug?.trim() || slugify(draft.title);
+      const result = await savePost({
+        adminSecret,
+        id: selected.id,
+        title: draft.title,
+        slug,
+        excerpt: draft.excerpt,
+        body: draft.body,
+        published: draft.published,
+      });
+      if (result.slug !== draft.slug) updateDraft({ slug: result.slug });
+      setToast("Saved.");
+    } catch (err) {
+      setToast(err?.message || "Could not save.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const publishCurrent = async () => {
+    if (!selected || !draft) return;
+    setBusy(true);
+    try {
+      const slug = draft.slug?.trim() || slugify(draft.title);
+      const result = await publishPost({
+        adminSecret,
+        id: selected.id,
+        title: draft.title,
+        slug,
+        excerpt: draft.excerpt,
+        body: draft.body,
+      });
+      updateDraft({ slug: result.slug, published: true });
+      setToast("Published — live for all visitors on kipkemoiadvocates.org.");
+    } catch (err) {
+      setToast(err?.message || "Could not publish.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const unpublishCurrent = async () => {
     if (!selected) return;
-    const now = new Date().toISOString();
-    const nextPosts = workspace.posts.map((p) =>
-      p.id === selectedId ? { ...p, published: false, updatedAt: now } : p
-    );
-    persist({ version: 1, posts: nextPosts });
-    setToast("Unpublished — removed from the public blog.");
+    setBusy(true);
+    try {
+      await unpublishPost({ adminSecret, id: selected.id });
+      updateDraft({ published: false });
+      setToast("Unpublished — removed from the public blog.");
+    } catch (err) {
+      setToast(err?.message || "Could not unpublish.");
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const saveCurrent = () => {
-    if (!selected) return;
-    const slug = ensureUniqueSlug(workspace.posts, slugify(selected.slug || selected.title), selected.id);
-    const title = selected.title?.trim() || "Untitled";
-    updateSelected({ slug, title });
-    setToast("Saved.");
-  };
-
-  const removeSelected = () => {
+  const removeSelected = async () => {
     if (!selectedId) return;
-    if (!window.confirm("Delete this article from the workspace?")) return;
-    const nextPosts = workspace.posts.filter((p) => p.id !== selectedId);
-    persist({ version: 1, posts: nextPosts });
-    setSelectedId(nextPosts[0]?.id ?? null);
-  };
-
-  const syncFromLive = async () => {
-    const live = await fetchLiveBundle();
-    const merged = mergeLiveIntoWorkspace(workspace, live);
-    persist(merged);
-    setToast("Merged posts from the live site file.");
-  };
-
-  const downloadLiveJson = () => {
-    const blob = new Blob([bundleForLiveSite(workspace)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "blog-data.json";
-    a.click();
-    URL.revokeObjectURL(a.href);
-    setToast("Downloaded blog-data.json — upload this to your hosting root so everyone sees your posts.");
-  };
-
-  const downloadWorkspaceJson = () => {
-    const blob = new Blob([JSON.stringify(workspace, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "blog-workspace-backup.json";
-    a.click();
-    URL.revokeObjectURL(a.href);
+    if (!window.confirm("Delete this article permanently?")) return;
+    setBusy(true);
+    try {
+      await removePost({ adminSecret, id: selectedId });
+      const remaining = posts.filter((p) => p.id !== selectedId);
+      setSelectedId(remaining[0]?.id ?? null);
+      setToast("Article deleted.");
+    } catch (err) {
+      setToast(err?.message || "Could not delete.");
+    } finally {
+      setBusy(false);
+    }
   };
 
   const onImportFile = async (e) => {
@@ -165,13 +234,22 @@ export default function BlogPanel() {
     try {
       const text = await file.text();
       const data = JSON.parse(text);
-      if (!data || !Array.isArray(data.posts)) {
+      const rawPosts = data.posts || data;
+      if (!Array.isArray(rawPosts)) {
         window.alert("Invalid file: expected { posts: [...] }");
         return;
       }
-      persist({ version: 1, posts: data.posts });
-      setSelectedId(data.posts[0]?.id ?? null);
-      setToast("Workspace imported.");
+      const normalized = rawPosts.map((p) => ({
+        title: p.title || "",
+        slug: p.slug || slugify(p.title),
+        excerpt: p.excerpt || "",
+        body: p.body || "",
+        published: !!p.published,
+        createdAt: p.createdAt ? new Date(p.createdAt).getTime() : Date.now(),
+        updatedAt: p.updatedAt ? new Date(p.updatedAt).getTime() : Date.now(),
+      }));
+      const result = await importFromJson({ adminSecret, posts: normalized });
+      setToast(`Imported ${result.imported} article(s).`);
     } catch {
       window.alert("Could not read JSON.");
     }
@@ -197,29 +275,32 @@ export default function BlogPanel() {
               page.
             </Typography>
           </Box>
-          <Button component={RouterLink} to="/#team" variant="outlined" sx={{ borderColor: NAVY, color: NAVY, flexShrink: 0 }}>
-            Back to site
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button component={RouterLink} to="/#team" variant="outlined" sx={{ borderColor: NAVY, color: NAVY, flexShrink: 0 }}>
+              Back to site
+            </Button>
+            <Button variant="text" onClick={clearAdminSecret} sx={{ color: "rgba(11,27,46,0.55)" }}>
+              Sign out
+            </Button>
+          </Stack>
         </Stack>
 
-        <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
-          <strong>Publish to blog</strong> makes posts appear immediately in your browser. For all visitors on{" "}
-          <strong>kipkemoiadvocates.org</strong>, also download <strong>blog-data.json</strong> and upload it next to{" "}
-          <code>index.html</code> on your host.
+        <Alert severity="success" sx={{ mb: 3, borderRadius: 2 }}>
+          <strong>Convex connected.</strong> Publishing updates the live site instantly — no manual file upload needed.
         </Alert>
 
         <Stack direction={{ xs: "column", md: "row" }} spacing={3} alignItems="stretch">
           <Paper elevation={0} sx={{ width: { md: 280 }, flexShrink: 0, border: "1px solid rgba(11,27,46,0.1)", borderRadius: 2 }}>
             <Box sx={{ p: 2, borderBottom: "1px solid rgba(11,27,46,0.08)" }}>
-              <Button fullWidth variant="contained" onClick={addPost} sx={{ bgcolor: NAVY, fontWeight: 700, mb: 1 }}>
+              <Button fullWidth variant="contained" onClick={addPost} disabled={busy} sx={{ bgcolor: NAVY, fontWeight: 700, mb: 1 }}>
                 New article
               </Button>
               <Typography sx={{ fontSize: "0.7rem", color: "rgba(11,27,46,0.45)", textAlign: "center" }}>
-                {workspace.posts.length} in workspace
+                {posts.length} article{posts.length === 1 ? "" : "s"}
               </Typography>
             </Box>
             <List dense sx={{ py: 0, maxHeight: { xs: 220, md: "calc(100vh - 280px)" }, overflow: "auto" }}>
-              {workspace.posts.map((p) => (
+              {posts.map((p) => (
                 <ListItemButton key={p.id} selected={p.id === selectedId} onClick={() => setSelectedId(p.id)}>
                   <ListItemText
                     primary={p.title?.trim() || "Untitled"}
@@ -229,7 +310,7 @@ export default function BlogPanel() {
                   />
                 </ListItemButton>
               ))}
-              {workspace.posts.length === 0 && (
+              {posts.length === 0 && (
                 <Typography sx={{ p: 2, color: "rgba(11,27,46,0.45)", fontSize: "0.85rem" }}>No articles yet.</Typography>
               )}
             </List>
@@ -239,66 +320,67 @@ export default function BlogPanel() {
             {!selected && (
               <Typography sx={{ color: "rgba(11,27,46,0.55)" }}>Select an article or create a new one.</Typography>
             )}
-            {selected && (
+            {selected && draft && (
               <Stack spacing={2.5}>
                 <TextField
                   label="Title"
                   fullWidth
-                  value={selected.title}
-                  onChange={(e) => updateSelected({ title: e.target.value })}
+                  value={draft.title}
+                  onChange={(e) => updateDraft({ title: e.target.value })}
                   onBlur={() => {
-                    if (!selected.slug?.trim() && selected.title?.trim()) {
-                      updateSelected({ slug: slugify(selected.title) });
+                    if (!draft.slug?.trim() && draft.title?.trim()) {
+                      updateDraft({ slug: slugify(draft.title) });
                     }
                   }}
                 />
                 <TextField
                   label="URL slug"
                   fullWidth
-                  helperText="Used in the address: /blog/your-slug — auto-filled from title if left empty on blur."
-                  value={selected.slug}
-                  onChange={(e) => updateSelected({ slug: e.target.value })}
+                  helperText="Used in the address: /blog/your-slug"
+                  value={draft.slug}
+                  onChange={(e) => updateDraft({ slug: e.target.value })}
                 />
                 <TextField
                   label="Excerpt"
                   fullWidth
                   multiline
                   minRows={2}
-                  value={selected.excerpt}
-                  onChange={(e) => updateSelected({ excerpt: e.target.value })}
+                  value={draft.excerpt}
+                  onChange={(e) => updateDraft({ excerpt: e.target.value })}
+                  helperText="Shown in Google search results and on the blog list."
                 />
                 <TextField
                   label="Body"
                   fullWidth
                   multiline
                   minRows={12}
-                  value={selected.body}
-                  onChange={(e) => updateSelected({ body: e.target.value })}
+                  value={draft.body}
+                  onChange={(e) => updateDraft({ body: e.target.value })}
                   placeholder="Plain text or paragraphs. Line breaks are preserved."
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={!!selected.published}
-                      onChange={(e) => updateSelected({ published: e.target.checked })}
+                      checked={!!draft.published}
+                      onChange={(e) => updateDraft({ published: e.target.checked })}
                       sx={{ color: GOLD, "&.Mui-checked": { color: GOLD } }}
                     />
                   }
                   label="Published (shown on public blog)"
                 />
                 <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} flexWrap="wrap" useFlexGap>
-                  <Button variant="contained" onClick={publishCurrent} sx={{ bgcolor: GOLD, color: NAVY, fontWeight: 700 }}>
+                  <Button variant="contained" onClick={publishCurrent} disabled={busy} sx={{ bgcolor: GOLD, color: NAVY, fontWeight: 700 }}>
                     Publish to blog
                   </Button>
-                  <Button variant="outlined" onClick={saveCurrent} sx={{ borderColor: NAVY, color: NAVY }}>
+                  <Button variant="outlined" onClick={saveCurrent} disabled={busy} sx={{ borderColor: NAVY, color: NAVY }}>
                     Save draft
                   </Button>
-                  {selected.published && (
-                    <Button variant="outlined" color="warning" onClick={unpublishCurrent}>
+                  {draft.published && (
+                    <Button variant="outlined" color="warning" onClick={unpublishCurrent} disabled={busy}>
                       Unpublish
                     </Button>
                   )}
-                  <Button color="error" variant="outlined" onClick={removeSelected}>
+                  <Button color="error" variant="outlined" onClick={removeSelected} disabled={busy}>
                     Delete
                   </Button>
                 </Stack>
@@ -307,26 +389,14 @@ export default function BlogPanel() {
 
             <Divider sx={{ my: 4 }} />
 
-            <Typography sx={{ fontWeight: 700, color: NAVY, mb: 1.5 }}>Deploy to kipkemoiadvocates.org</Typography>
+            <Typography sx={{ fontWeight: 700, color: NAVY, mb: 1.5 }}>Import legacy posts</Typography>
             <Typography sx={{ color: "rgba(11,27,46,0.65)", fontSize: "0.88rem", lineHeight: 1.75, mb: 2 }}>
-              After publishing, download <strong>blog-data.json</strong> and upload it to your website root (same folder as{" "}
-              <code>index.html</code>). Replace the existing file. Then rebuild/redeploy the site if you use git deploy.
+              Import a previous <strong>blog-data.json</strong> or workspace backup to move old articles into Convex.
             </Typography>
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} flexWrap="wrap" useFlexGap>
-              <Button variant="contained" onClick={downloadLiveJson} sx={{ bgcolor: NAVY, color: "white", fontWeight: 700 }}>
-                Download blog-data.json
-              </Button>
-              <Button variant="outlined" onClick={downloadWorkspaceJson} sx={{ borderColor: NAVY, color: NAVY }}>
-                Backup workspace
-              </Button>
-              <Button variant="outlined" onClick={syncFromLive} sx={{ borderColor: NAVY, color: NAVY }}>
-                Merge from live site
-              </Button>
-              <Button variant="outlined" onClick={() => fileImportRef.current?.click()} sx={{ borderColor: NAVY, color: NAVY }}>
-                Import workspace
-              </Button>
-              <input ref={fileImportRef} type="file" accept="application/json,.json" hidden onChange={onImportFile} />
-            </Stack>
+            <Button variant="outlined" onClick={() => fileImportRef.current?.click()} sx={{ borderColor: NAVY, color: NAVY }}>
+              Import JSON
+            </Button>
+            <input ref={fileImportRef} type="file" accept="application/json,.json" hidden onChange={onImportFile} />
           </Paper>
         </Stack>
       </Container>

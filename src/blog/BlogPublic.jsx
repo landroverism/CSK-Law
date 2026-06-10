@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "convex/react";
 import {
   Box,
   Button,
@@ -10,52 +10,34 @@ import {
   Typography,
 } from "@mui/material";
 import { Link as RouterLink, Navigate, useParams } from "react-router-dom";
-import { BLOG_UPDATED_EVENT, fetchPublishedPosts } from "./blogStorage";
+import { api } from "../../convex/_generated/api";
+import { BRAND_SHORT } from "./siteConfig";
+import { BlogListSeo, BlogPostSeo } from "./BlogSeo";
 
 const NAVY = "#0B1B2E";
 const GOLD = "#C8A96E";
 const GOLD_DEEP = "#A78848";
 const IVORY = "#FAFAF7";
 
-function formatDate(iso) {
-  if (!iso) return "";
+function formatDate(ms) {
+  if (!ms) return "";
   try {
-    return new Date(iso).toLocaleDateString(undefined, {
+    return new Date(ms).toLocaleDateString(undefined, {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
   } catch {
-    return iso;
+    return "";
   }
 }
 
-function usePublishedPosts() {
-  const [posts, setPosts] = useState(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      const bundle = await fetchPublishedPosts();
-      if (!cancelled) setPosts(bundle.posts);
-    };
-    load();
-    const onUpdate = () => load();
-    window.addEventListener(BLOG_UPDATED_EVENT, onUpdate);
-    return () => {
-      cancelled = true;
-      window.removeEventListener(BLOG_UPDATED_EVENT, onUpdate);
-    };
-  }, []);
-
-  return posts;
-}
-
 export function BlogListPage() {
-  const posts = usePublishedPosts();
+  const posts = useQuery(api.posts.listPublished);
 
   return (
     <Box sx={{ bgcolor: IVORY, minHeight: "100vh", pt: { xs: 14, md: 16 }, pb: { xs: 8, md: 12 } }}>
+      <BlogListSeo />
       <Container maxWidth="md">
         <Typography
           variant="h2"
@@ -70,10 +52,10 @@ export function BlogListPage() {
           Firm <Box component="span" sx={{ color: GOLD_DEEP }}>Blog</Box>
         </Typography>
         <Typography sx={{ color: "rgba(11,27,46,0.65)", mb: 5, maxWidth: 560, lineHeight: 1.8, fontWeight: 300 }}>
-          Updates and insights from Collins Kipkemoi Sang & Company Advocates.
+          Updates and insights from {BRAND_SHORT}.
         </Typography>
 
-        {posts === null && (
+        {posts === undefined && (
           <Typography sx={{ color: "rgba(11,27,46,0.5)" }}>Loading articles…</Typography>
         )}
         {posts && posts.length === 0 && (
@@ -111,45 +93,25 @@ export function BlogListPage() {
 
 export function BlogPostPage() {
   const { slug } = useParams();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const decoded = slug ? decodeURIComponent(slug) : "";
+  const post = useQuery(api.posts.getBySlug, decoded ? { slug: decoded } : "skip");
 
-  useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      setLoading(true);
-      const bundle = await fetchPublishedPosts();
-      const decoded = slug ? decodeURIComponent(slug) : "";
-      const found = bundle.posts.find((p) => p.slug === decoded);
-      if (!cancelled) {
-        setPost(found || null);
-        setLoading(false);
-      }
-    };
-    load();
-    const onUpdate = () => load();
-    window.addEventListener(BLOG_UPDATED_EVENT, onUpdate);
-    return () => {
-      cancelled = true;
-      window.removeEventListener(BLOG_UPDATED_EVENT, onUpdate);
-    };
-  }, [slug]);
-
-  if (!loading && !post) {
+  if (post === null) {
     return <Navigate to="/blog" replace />;
   }
 
   return (
     <Box sx={{ bgcolor: IVORY, minHeight: "100vh", pt: { xs: 14, md: 16 }, pb: { xs: 8, md: 12 } }}>
+      {post ? <BlogPostSeo post={post} /> : null}
       <Container maxWidth="md">
         <Button component={RouterLink} to="/blog" sx={{ mb: 3, color: GOLD_DEEP, fontWeight: 600 }}>
           ← All posts
         </Button>
-        {loading && <Typography sx={{ color: "rgba(11,27,46,0.5)" }}>Loading…</Typography>}
-        {!loading && post && (
+        {post === undefined && <Typography sx={{ color: "rgba(11,27,46,0.5)" }}>Loading…</Typography>}
+        {post && (
           <article>
             <Typography sx={{ fontSize: "0.72rem", color: GOLD_DEEP, fontWeight: 600, letterSpacing: 1.2, mb: 1 }}>
-              {formatDate(post.updatedAt || post.createdAt)}
+              {formatDate(post.updatedAt || post.createdAt)} · {BRAND_SHORT}
             </Typography>
             <Typography
               component="h1"
