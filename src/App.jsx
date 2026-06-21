@@ -118,7 +118,7 @@ const TEAM = [
     bio: "Collins is the founding Managing Partner of the firm. He brings extensive experience in succession law and estate administration, complex property matters, and high-value commercial litigation. His practice includes emerging fields such as information technology law and digital regulation.",
     tags: ["Succession", "Litigation", "IT Law", "Property", "Corporate"],
     email: "collins@kipkemoisangadvocates.com",
-    photo: "/photos/collins.png",
+    photo: "/photos/collo.png",
   },
   {
     initials: "WO",
