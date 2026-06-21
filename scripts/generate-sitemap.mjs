@@ -3,36 +3,58 @@ import { resolve } from "node:path";
 import { ConvexHttpClient } from "convex/browser";
 
 const SITE_URL = "https://kipkemoi-advocates.org";
+const DEFAULT_CONVEX_URL = "https://veracious-setter-259.convex.cloud";
 
-function loadEnv() {
+function parseEnvFile(filename) {
+  const vars = {};
   try {
-    const raw = readFileSync(resolve(process.cwd(), ".env.local"), "utf8");
+    const raw = readFileSync(resolve(process.cwd(), filename), "utf8");
     for (const line of raw.split("\n")) {
       const trimmed = line.trim();
       if (!trimmed || trimmed.startsWith("#")) continue;
       const idx = trimmed.indexOf("=");
       if (idx === -1) continue;
-      const key = trimmed.slice(0, idx).trim();
-      const value = trimmed.slice(idx + 1).trim();
-      if (!process.env[key]) process.env[key] = value;
+      vars[trimmed.slice(0, idx).trim()] = trimmed.slice(idx + 1).trim();
     }
   } catch {
     // optional for CI
   }
+  return vars;
 }
 
-loadEnv();
+function isValidConvexUrl(url) {
+  return typeof url === "string" && /^https?:\/\/.+\.convex\.(cloud|site)\/?$/i.test(url.trim());
+}
 
-const convexUrl = process.env.VITE_CONVEX_URL;
+function resolveConvexUrl() {
+  const candidates = [
+    process.env.VITE_CONVEX_URL,
+    parseEnvFile(".env.production").VITE_CONVEX_URL,
+    parseEnvFile(".env.local").VITE_CONVEX_URL,
+    DEFAULT_CONVEX_URL,
+  ];
+
+  for (const candidate of candidates) {
+    if (isValidConvexUrl(candidate)) return candidate.trim();
+  }
+
+  return null;
+}
+
+const convexUrl = resolveConvexUrl();
 if (!convexUrl) {
-  console.warn("VITE_CONVEX_URL not set — writing minimal sitemap.");
+  console.warn("No valid VITE_CONVEX_URL — writing minimal sitemap without blog posts.");
 }
 
 async function main() {
   let posts = [];
   if (convexUrl) {
-    const client = new ConvexHttpClient(convexUrl);
-    posts = await client.query("posts:listPublished", {});
+    try {
+      const client = new ConvexHttpClient(convexUrl);
+      posts = await client.query("posts:listPublished", {});
+    } catch (err) {
+      console.warn("Could not fetch posts from Convex — writing minimal sitemap.", err?.message || err);
+    }
   }
 
   const urls = [

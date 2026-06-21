@@ -11,7 +11,16 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./styles.css";
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
+const DEFAULT_CONVEX_URL = "https://veracious-setter-259.convex.cloud";
+const envConvexUrl = import.meta.env.VITE_CONVEX_URL;
+const convexUrl =
+  typeof envConvexUrl === "string" &&
+  envConvexUrl.startsWith("https://") &&
+  envConvexUrl.includes(".convex.")
+    ? envConvexUrl
+    : DEFAULT_CONVEX_URL;
+
+const convex = new ConvexReactClient(convexUrl);
 
 const theme = createTheme({
   palette: {
