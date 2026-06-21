@@ -189,7 +189,7 @@ export default function BlogPanel() {
         body: draft.body,
       });
       updateDraft({ slug: result.slug, published: true });
-      setToast("Published — live for all visitors on kipkemoiadvocates.org.");
+      setToast("Published — live for all visitors on kipkemoi-advocates.org.");
     } catch (err) {
       setToast(err?.message || "Could not publish.");
     } finally {

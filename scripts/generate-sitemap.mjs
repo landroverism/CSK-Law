@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { ConvexHttpClient } from "convex/browser";
 
-const SITE_URL = "https://kipkemoiadvocates.org";
+const SITE_URL = "https://kipkemoi-advocates.org";
 
 function loadEnv() {
   try {

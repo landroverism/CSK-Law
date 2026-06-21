@@ -4,7 +4,7 @@ import { api } from "./_generated/api";
 
 const http = httpRouter();
 
-const SITE_URL = "https://kipkemoiadvocates.org";
+const SITE_URL = "https://kipkemoi-advocates.org";
 
 http.route({
   path: "/sitemap.xml",

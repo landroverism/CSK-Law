@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /blog/panel
 
-Sitemap: https://kipkemoiadvocates.org/sitemap.xml
+Sitemap: https://kipkemoi-advocates.org/sitemap.xml

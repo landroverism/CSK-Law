@@ -1,4 +1,4 @@
-export const SITE_URL = "https://kipkemoiadvocates.org";
+export const SITE_URL = "https://kipkemoi-advocates.org";
 export const BRAND_SHORT = "Kipkemoi Advocates";
 export const BRAND_FULL = "Collins Kipkemoi Sang & Company Advocates";
 
