@@ -140,6 +140,24 @@ const TEAM = [
     email: "nzanga@kipkemoisangadvocates.com",
     photo: null,
   },
+  {
+    initials: "HMN",
+    name: "Harriet Muthoni Nderitu",
+    role: "Firm's Tax Consultant",
+    qual: "BCom (Finance & Marketing) · CPA Section 3",
+    bio: "Harriet Muthoni Ndiritu is the firm's Tax Consultant, working alongside our legal team to deliver integrated tax and legal solutions for individuals and businesses.\n\nShe began her career at the Kenya Revenue Authority, where she gained hands-on experience assisting taxpayers with VAT, PAYE, Monthly Rental Income, and withholding tax filings, and supported the national rollout of eTIMS. She went on to strengthen her expertise in audit and financial management at Geoffe & Associates LLP, handling bank reconciliations, general ledger management, and statutory compliance across VAT, PAYE, WHT, MRI, NHIF, and NSSF. She currently serves as Finance and Business Development Officer for a private estate and family trust, overseeing its financial operations and statutory compliance.\n\nHarriet is progressing toward her CPA-K qualification (CPA Section 3) and holds a Bachelor of Commerce in Finance and Marketing from Strathmore University, where she is also pursuing a Master of Commerce.\n\nHer practice focuses on KRA PIN registration, VAT and PAYE filing, Turnover Tax, Monthly Rental Income, eTIMS compliance, bookkeeping and payroll, and resolving KRA disputes and penalties for individuals and SMEs.",
+    tags: ["Tax Advisory", "Statutory Compliance", "eTIMS", "Bookkeeping"],
+    photo: "/photos/harriet.png",
+  },
+  {
+    initials: "AWM",
+    name: "Alice Wanjiru Muiruri",
+    role: "HEAD OF MEDIATION",
+    qual: "CPA-K · Certified Professional Mediator (Peace Mediation Africa)",
+    bio: "Alice Wanjiru Muiruri heads the Mediation Team at Collins Kipkemoi Sang & Company Advocates and sits within the firm's Financial and Tax Division. A Certified Public Accountant (CPA-K) and accredited Certified Professional Mediator, she pairs financial fluency with dispute-resolution skill — guiding clients through structured, impartial mediation that resolves disputes faster and at lower cost than litigation, particularly in estate, property, and commercial-finance matters.\n\nWith over 13 years in financial management, taxation, and statutory compliance, Alice brings hands-on experience overseeing large property and investment portfolios, budgeting, tax compliance, and internal controls to every mediation she leads.",
+    tags: ["Mediation", "Finance"],
+    photo: "/photos/alice-2.jpeg",
+  },
 ];
 
 const SUPPORT_TEAM = [
