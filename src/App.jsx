@@ -642,54 +642,69 @@ function TeamCard({ m, compact }) {
         transformOrigin: "left", transition: "transform 0.45s ease",
       }} />
 
-      {/* ── PHOTO SLOT ────────────────────────────────────────────────────
-          To add a real photo, set m.photo to the file path, e.g.:
-            photo: "/photos/collins.png"
-          If m.photo is null the styled initials placeholder shows.          */}
+      {/* ── CIRCULAR AVATAR ────────────────────────────────────────────── */}
       <Box sx={{
-        height: compact ? 260 : 320,
-        position: "relative", overflow: "hidden",
         background: `linear-gradient(160deg, ${NAVY} 0%, ${NAVY_LIGHT} 100%)`,
-        display: "flex", alignItems: "center", justifyContent: "center",
+        pt: 4, pb: 2.5,
+        display: "flex", flexDirection: "column", alignItems: "center",
+        position: "relative", overflow: "hidden",
       }}>
-        {m.photo ? (
-          <Box
-            component="img"
-            src={m.photo}
-            alt={m.name}
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              objectPosition: "center 20%",
-              display: "block",
-              background: `linear-gradient(160deg, ${NAVY} 0%, ${NAVY_LIGHT} 100%)`,
-            }}
-          />
-        ) : (
-          /* Styled placeholder — replace with <img> src once photos are ready */
-          <Box sx={{ textAlign: "center", userSelect: "none" }}>
-            <Typography sx={{ fontSize: compact ? "3rem" : "4rem", fontWeight: 800, color: GOLD, opacity: 0.55, lineHeight: 1 }}>
-              {m.initials}
-            </Typography>
-            <Typography sx={{ color: "rgba(255,255,255,0.35)", fontSize: "0.6rem", letterSpacing: 2.5, mt: 1, textTransform: "uppercase" }}>
-              Photo Coming Soon
-            </Typography>
-          </Box>
-        )}
-
-        {/* Bottom fade overlay */}
+        {/* Dot-grid overlay */}
         <Box sx={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: 56,
-          background: "linear-gradient(to top, rgba(6,15,28,0.45), transparent)",
+          position: "absolute", inset: 0, opacity: 0.35,
+          backgroundImage: `radial-gradient(rgba(200,169,110,0.15) 1px, transparent 1px)`,
+          backgroundSize: "20px 20px", pointerEvents: "none",
         }} />
-
-        {/* Role badge */}
+        {/* Centre glow */}
         <Box sx={{
-          position: "absolute", bottom: 10, left: 12,
-          bgcolor: "rgba(200,169,110,0.92)", px: 1.2, py: 0.3, borderRadius: 0,
-        }}>
-          <Typography sx={{ fontSize: "0.58rem", fontWeight: 700, letterSpacing: 1.8, textTransform: "uppercase", color: NAVY }}>
+          position: "absolute", top: "50%", left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 200, height: 200, borderRadius: "50%",
+          background: `radial-gradient(circle, rgba(200,169,110,0.18) 0%, transparent 70%)`,
+          pointerEvents: "none",
+        }} />
+        {/* Avatar circle with animated gold ring */}
+        <Box
+          component={motion.div}
+          animate={{ boxShadow: hov
+            ? `0 0 0 3px ${GOLD}, 0 0 0 7px rgba(200,169,110,0.25), 0 16px 40px -12px rgba(0,0,0,0.55)`
+            : `0 0 0 3px ${GOLD_DEEP}, 0 0 0 7px rgba(200,169,110,0.10), 0 8px 24px -8px rgba(0,0,0,0.4)`
+          }}
+          transition={{ duration: 0.4 }}
+          sx={{
+            width: compact ? 120 : 140, height: compact ? 120 : 140,
+            borderRadius: "50%", overflow: "hidden",
+            position: "relative", zIndex: 1, flexShrink: 0,
+          }}
+        >
+          {m.photo ? (
+            <Box
+              component="img"
+              src={m.photo}
+              alt={m.name}
+              sx={{
+                width: "100%", height: "100%",
+                objectFit: "cover", objectPosition: "center top",
+                display: "block",
+                transition: "transform 0.5s ease",
+                transform: hov ? "scale(1.07)" : "scale(1)",
+              }}
+            />
+          ) : (
+            <Box sx={{
+              width: "100%", height: "100%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              background: `linear-gradient(135deg, ${NAVY_MID}, ${NAVY_LIGHT})`,
+            }}>
+              <Typography sx={{ fontSize: "2rem", fontWeight: 800, color: GOLD, opacity: 0.7 }}>
+                {m.initials}
+              </Typography>
+            </Box>
+          )}
+        </Box>
+        {/* Role badge pill */}
+        <Box sx={{ mt: 2, px: 1.6, py: 0.4, bgcolor: "rgba(200,169,110,0.92)", position: "relative", zIndex: 1 }}>
+          <Typography sx={{ fontSize: "0.56rem", fontWeight: 700, letterSpacing: 1.8, textTransform: "uppercase", color: NAVY }}>
             {m.role}
           </Typography>
         </Box>
