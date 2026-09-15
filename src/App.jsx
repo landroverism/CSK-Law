@@ -644,25 +644,10 @@ function TeamCard({ m, compact }) {
 
       {/* ── CIRCULAR AVATAR ────────────────────────────────────────────── */}
       <Box sx={{
-        background: `linear-gradient(160deg, ${NAVY} 0%, ${NAVY_LIGHT} 100%)`,
-        pt: 4, pb: 2.5,
+        pt: 4, pb: 1,
         display: "flex", flexDirection: "column", alignItems: "center",
         position: "relative", overflow: "hidden",
       }}>
-        {/* Dot-grid overlay */}
-        <Box sx={{
-          position: "absolute", inset: 0, opacity: 0.35,
-          backgroundImage: `radial-gradient(rgba(200,169,110,0.15) 1px, transparent 1px)`,
-          backgroundSize: "20px 20px", pointerEvents: "none",
-        }} />
-        {/* Centre glow */}
-        <Box sx={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 200, height: 200, borderRadius: "50%",
-          background: `radial-gradient(circle, rgba(200,169,110,0.18) 0%, transparent 70%)`,
-          pointerEvents: "none",
-        }} />
         {/* Avatar circle with animated gold ring */}
         <Box
           component={motion.div}
