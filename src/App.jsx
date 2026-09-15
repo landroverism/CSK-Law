@@ -161,6 +161,15 @@ const SUPPORT_TEAM = [
     tags: ["Legal Research", "Case Analysis", "Legal Writing"],
     photo: "/photos/peter-kavoi.png",
   },
+  {
+    initials: "SW",
+    name: "Sydney Wachira",
+    role: "Legal Researcher",
+    qual: "LLB (Hons) · Postgraduate Studies, Kenya School of Law",
+    bio: "Sydney supports the firm's attorneys with in-depth legal research, case law analysis, statutory interpretation, and preparation of legal opinions and briefs across all practice areas.",
+    tags: ["Legal Research", "Case Analysis", "Legal Writing"],
+    photo: "/photos/sydney.png",
+  },
 ];
 
 const WHY_ITEMS = [
