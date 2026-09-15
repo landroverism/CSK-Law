@@ -170,6 +170,15 @@ const SUPPORT_TEAM = [
     tags: ["Legal Research", "Case Analysis", "Legal Writing"],
     photo: "/photos/sydney.png",
   },
+  {
+    initials: "HMN",
+    name: "Harriet Muthoni Ndiritu",
+    role: "Firm's Tax Consultant",
+    qual: "BCom (Finance & Marketing) · CPA-K Candidate",
+    bio: "Harriet Muthoni Ndiritu is the firm's Tax Consultant, working alongside our legal team to deliver integrated tax and legal solutions for individuals and businesses.\n\nShe began her career at the Kenya Revenue Authority, where she gained hands-on experience assisting taxpayers with VAT, PAYE, Monthly Rental Income, and withholding tax filings, and supported the national rollout of eTIMS. She went on to strengthen her expertise in audit and financial management at Geoffe & Associates LLP, handling bank reconciliations, general ledger management, and statutory compliance across VAT, PAYE, WHT, MRI, NHIF, and NSSF. She currently serves as Finance and Business Development Officer for a private estate and family trust, overseeing its financial operations and statutory compliance.\n\nHarriet is progressing toward her CPA-K qualification (CPA Section 3) and holds a Bachelor of Commerce in Finance and Marketing from Strathmore University, where she is also pursuing a Master of Commerce.\n\nHer practice focuses on KRA PIN registration, VAT and PAYE filing, Turnover Tax, Monthly Rental Income, eTIMS compliance, bookkeeping and payroll, and resolving KRA disputes and penalties for individuals and SMEs.",
+    tags: ["Tax Advisory", "Statutory Compliance", "Finance"],
+    photo: "/photos/harriet.png",
+  },
 ];
 
 const WHY_ITEMS = [
