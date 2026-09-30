@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Box,
   Button,
@@ -919,12 +920,33 @@ function Contact() {
   const [form, setForm] = useState({ fname: "", lname: "", email: "", phone: "", practice: "", message: "" });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => { setSending(false); setSent(true); }, 1100);
+    setError("");
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: `${form.fname} ${form.lname}`,
+          from_email: form.email,
+          phone: form.phone || "Not provided",
+          practice: form.practice || "Not specified",
+          message: form.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      setSent(true);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setError("Something went wrong. Please email us directly at collins@kipkemoisangadvocates.com");
+    } finally {
+      setSending(false);
+    }
   };
 
   const contactDetails = [
@@ -1059,6 +1081,11 @@ function Contact() {
                     >
                       {sending ? "Sending…" : "Send Enquiry →"}
                     </Button>
+                    {error && (
+                      <Typography sx={{ color: "#ff6b6b", fontSize: "0.85rem", fontWeight: 400, mt: 1 }}>
+                        {error}
+                      </Typography>
+                    )}
                   </Stack>
                 ) : (
                   <Box
